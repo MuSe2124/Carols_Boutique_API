@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.ReportBE.IDaoreport;
 
 import java.sql.Connection;
@@ -29,13 +25,12 @@ import za.co.carols_boutique.models.Sale;
 import za.co.carols_boutique.models.SaleReport;
 import za.co.carols_boutique.models.Store;
 import za.co.carols_boutique.models.StoreSale;
-import za.co.carols_boutique.yaml.CarolsYAML;
-
 
 /**
  *
  * @author HP
  */
+
 public class DAORepImp implements DAORep {
 
 	private Connection con;
@@ -334,7 +329,7 @@ public class DAORepImp implements DAORep {
 						ResultSet rs3 = ps.executeQuery();
 						rs3.next();
 						Integer total = rs3.getInt("total");
-						
+
 					}
 				}
 			} catch (SQLException ex) {

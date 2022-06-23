@@ -1,22 +1,14 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.models;
 
 import java.io.Serializable;
 
-/**
- *
- * @author muaad
- */
-public class LineItem implements Serializable{
+public class LineItem implements Serializable {
 
 	private String id;
 	private String saleID;
 	private Product product;
 	private Integer amount;
-        private String size;
+	private String size;
 
 	public LineItem(String id, String saleID, Product product, Integer amounnt) {
 		this.id = id;
@@ -69,12 +61,10 @@ public class LineItem implements Serializable{
 	public Float getTotal() {
 		return product.getPrice() * amount;
 	}
-       
 
 	@Override
 	public String toString() {
 		return "LineItem{" + "id=" + id + ", saleID=" + saleID + ", product=" + product.getName() + ", amounnt=" + amount + '}';
 	}
-    
-    
+
 }
