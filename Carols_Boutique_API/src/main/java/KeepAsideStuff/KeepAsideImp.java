@@ -41,7 +41,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 
 		time = Time.valueOf(LocalTime.MIN);
 
-		try {//com.mysql.cj.jdbc.Driver
+		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
