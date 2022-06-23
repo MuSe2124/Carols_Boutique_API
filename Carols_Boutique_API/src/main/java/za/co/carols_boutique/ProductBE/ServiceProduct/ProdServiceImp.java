@@ -1,10 +1,5 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.ProductBE.ServiceProduct;
 
-import java.util.ArrayList;
 import za.co.carols_boutique.ProductBE.IDAOProduct.DAOProduct;
 import za.co.carols_boutique.ProductBE.IDAOProduct.DAOProductImp;
 import za.co.carols_boutique.Utilities.Email;
@@ -13,10 +8,6 @@ import za.co.carols_boutique.models.Exchange;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Refund;
 
-/**
- *
- * @author muaad
- */
 public class ProdServiceImp implements ProdService {
 
 	private DAOProduct dao;

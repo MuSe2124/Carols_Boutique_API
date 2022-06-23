@@ -1,64 +1,54 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.models;
 
 import java.io.Serializable;
 
-/**
- *
- * @author muaad
- */
+public class EmpSale implements Serializable {
 
-public class EmpSale implements Serializable{
+	private String employeeID;
+	private Float saleTotal;
+	private String storeID;
 
-    private String employeeID;
-    private Float saleTotal;
-    private String storeID;
+	public EmpSale(String employeeID, Float saleTotal, String storeID) {
+		this.employeeID = employeeID;
+		this.saleTotal = saleTotal;
+		this.storeID = storeID;
+	}
 
-    public EmpSale(String employeeID, Float saleTotal, String storeID) {
-        this.employeeID = employeeID;
-        this.saleTotal = saleTotal;
-        this.storeID = storeID;
-    }
+	public EmpSale(Float saleTotal, String storeID) {
+		this.saleTotal = saleTotal;
+		this.storeID = storeID;
+	}
 
-    public EmpSale(Float saleTotal, String storeID) {
-        this.saleTotal = saleTotal;
-        this.storeID = storeID;
-    }
+	public EmpSale() {
+	}
 
+	public EmpSale(String employeeID, Float saleTotal) {
+		this.employeeID = employeeID;
+		this.saleTotal = saleTotal;
+	}
 
-    public EmpSale() {
-    }
+	public String getEmployee() {
+		return employeeID;
+	}
 
-    public EmpSale(String employeeID, Float saleTotal) {
-        this.employeeID = employeeID;
-        this.saleTotal = saleTotal;
-    }
+	public void setEmployee(String employeeID) {
+		this.employeeID = employeeID;
+	}
 
-    public String getEmployee() {
-        return employeeID;
-    }
+	public Float getSaleTotal() {
+		return saleTotal;
+	}
 
-    public void setEmployee(String employeeID) {
-        this.employeeID = employeeID;
-    }
+	public void setSaleTotal(Float saleTotal) {
+		this.saleTotal = saleTotal;
+	}
 
-    public Float getSaleTotal() {
-        return saleTotal;
-    }
+	public String getStoreID() {
+		return storeID;
+	}
 
-    public void setSaleTotal(Float saleTotal) {
-        this.saleTotal = saleTotal;
-    }
+	public void setStoreID(String storeID) {
+		this.storeID = storeID;
+	}
 
-    public String getStoreID() {
-        return storeID;
-    }
-
-    public void setStoreID(String storeID) {
-        this.storeID = storeID;
-    }
-       
 }

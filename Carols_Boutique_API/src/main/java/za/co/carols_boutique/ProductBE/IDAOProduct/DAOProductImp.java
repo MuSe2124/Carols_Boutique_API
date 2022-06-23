@@ -1,30 +1,18 @@
 package za.co.carols_boutique.ProductBE.IDAOProduct;
 
-import java.io.FileNotFoundException;
-import java.io.IOException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
 import java.util.ArrayList;
-import java.util.Date;
 import za.co.carols_boutique.models.Product;
-import za.co.carols_boutique.models.Report;
 import java.util.Date;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.models.ProdStore;
 import za.co.carols_boutique.models.Stock;
-import za.co.carols_boutique.properties.CarolsProperties;
-import za.co.carols_boutique.yaml.CarolsYAML;
 
-/**
- *
- * @author HP
- */
 public class DAOProductImp implements DAOProduct {
 
 	private Connection con;
@@ -32,7 +20,6 @@ public class DAOProductImp implements DAOProduct {
 	private ResultSet rs;
 	private int rowsAffected;
 
-//String id, String name, String description, Float price
 	public DAOProductImp() {
 		//CarolsYAML c = new CarolsYAML();
 		try {//com.mysql.cj.jdbc.Driver

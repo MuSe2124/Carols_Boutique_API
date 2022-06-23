@@ -1,6 +1,5 @@
 package za.co.carols_boutique.StoreBE.IDAOStore;
 
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -9,7 +8,6 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.models.Employee;
@@ -17,13 +15,7 @@ import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Sale;
 import za.co.carols_boutique.models.Store;
-import za.co.carols_boutique.properties.CarolsProperties;
-import za.co.carols_boutique.yaml.CarolsYAML;
 
-/**
- *
- * @author HP
- */
 public class DAOStoreImp implements DAOStore {
 
 	private Connection con;

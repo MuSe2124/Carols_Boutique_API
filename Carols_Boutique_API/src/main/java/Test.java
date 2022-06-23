@@ -21,18 +21,6 @@ import za.co.carols_boutique.models.Stock;
 import za.co.carols_boutique.models.Store;
 import za.co.carols_boutique.properties.CarolsProperties;
 
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
-
-/**
- *
- * @author Jomar
- */
-
-
-
 public class Test {
 
 //	public EmpServiceImp emp;
