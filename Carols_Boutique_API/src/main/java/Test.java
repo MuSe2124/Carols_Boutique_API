@@ -53,9 +53,9 @@ public class Test {
 		Report report;
 		
 //		WORKS
-//		System.out.println("\n\nTesting top achieving stores");
-//		report = test.rep.viewTopAchievingStores("june");
-//		System.out.println(report.toString());
+		System.out.println("\n\nTesting top achieving stores");
+		report = test.rep.viewTopAchievingStores("june");
+		System.out.println(report.toString());
 		
 //		WORKS
 //		System.out.println("\n\nTesting get customer reviews");

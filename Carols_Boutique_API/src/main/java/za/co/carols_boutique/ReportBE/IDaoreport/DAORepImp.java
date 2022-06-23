@@ -4,7 +4,6 @@
  */
 package za.co.carols_boutique.ReportBE.IDaoreport;
 
-import java.io.FileNotFoundException;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,8 +16,6 @@ import java.util.List;
 import za.co.carols_boutique.models.Customer;
 import za.co.carols_boutique.models.Report;
 import za.co.carols_boutique.models.Review;
-import java.util.Collections;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.StoreBE.IDAOStore.DAOStoreImp;
@@ -32,7 +29,7 @@ import za.co.carols_boutique.models.Sale;
 import za.co.carols_boutique.models.SaleReport;
 import za.co.carols_boutique.models.Store;
 import za.co.carols_boutique.models.StoreSale;
-import za.co.carols_boutique.yaml.CarolsYAML;
+
 
 /**
  *
@@ -90,11 +87,11 @@ public class DAORepImp implements DAORep {
 		}
 		StoreSale ss = null;
 		for (int i = 0; i < report.getStoreSales().size() - 1; i++) {
-			if (report.getStoreSales().get(i).getSaleTotal() > report.getStoreSales().get(i + 1).getSaleTotal()) {
+			if (report.getStoreSales().get(i).getSaleTotal() < report.getStoreSales().get(i + 1).getSaleTotal()) {
 				ss = report.getStoreSales().get(i);
 				report.getStoreSales().set(i, report.getStoreSales().get(i + 1));
 				report.getStoreSales().set(i + 1, ss);
-				i = 0;
+				i = -1;
 			}
 		}
 
@@ -375,11 +372,11 @@ public class DAORepImp implements DAORep {
 		}
 		StoreSale ss = null;
 		for (int i = 0; i < report.getStoreSales().size() - 1; i++) {
-			if (report.getStoreSales().get(i).getSaleTotal() < report.getStoreSales().get(i + 1).getSaleTotal()) {
+			if (report.getStoreSales().get(i).getSaleTotal() > report.getStoreSales().get(i + 1).getSaleTotal()) {
 				ss = report.getStoreSales().get(i);
 				report.getStoreSales().set(i, report.getStoreSales().get(i + 1));
 				report.getStoreSales().set(i + 1, ss);
-				i = 0;
+				i = -1;
 			}
 		}
 

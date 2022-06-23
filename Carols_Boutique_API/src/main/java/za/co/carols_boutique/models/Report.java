@@ -19,7 +19,7 @@ public class Report implements Serializable{
     private RepService service;
 
     public Report() {
-        service = new RepServiceImp();
+//        service = new RepServiceImp();
 		reviews = new ArrayList<Review>();
 		storeSales = new ArrayList<>();
 		empSales = new ArrayList<>();
@@ -51,7 +51,6 @@ public class Report implements Serializable{
     public void setProductReport(ProductReport productReport) {
         this.productReport = productReport;
     }
-
 
     public void setStoresSales(List<Sale> sales) {
         this.sales = sales;
@@ -107,14 +106,11 @@ public class Report implements Serializable{
 
 	@Override
 	public String toString() {
-		String s = "Report{" + "\nservice=" + service + "\nreviews=" + reviews.size() + "\nstoreSales=" + storeSales.size() + "\nempSales=" + empSales.size() + "\nprodStores=" + prodStores.size() + "\nsales=" + sales.size()  + "\nsaleReports=" + saleReports.size() + "\n";
+		String s = "Report{" + "\nreviews=" + reviews.size() + "\nstoreSales=" + storeSales.size() + "\nempSales=" + empSales.size() + "\nprodStores=" + prodStores.size() + "\nsales=" + sales.size()  + "\nsaleReports=" + saleReports.size() + "\n";
 		if(productReport!=null){
 			s +=  "\nproductReport= "+productReport.toString();
 		}
 		return s;
 	}
-    
-    
-    
 
 }
