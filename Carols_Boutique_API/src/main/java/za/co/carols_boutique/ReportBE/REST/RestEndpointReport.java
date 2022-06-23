@@ -31,9 +31,7 @@ public class RestEndpointReport {
     
     private RepService service = new RepServiceImp();
     
-	
-	
-	
+
     @GET
     @Path("/viewTopAchievingStores/{month}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -82,10 +80,8 @@ public class RestEndpointReport {
     @Path("/viewLeastPerformingStores/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewLeastPerformingStores(@PathParam("month")String month){
-        Response response = null;
-        
+        Response response = null;  
             response = Response.status(Response.Status.OK).entity(service.viewLeastPerformingStores(month)).build();
-        
         return response;
     }
     
@@ -127,5 +123,4 @@ public class RestEndpointReport {
 		Email email = new Email("newsLetterPromotion","jomarvn@gmail.com","Johannes",date);
         return new Employee();
     }
-    
 }
