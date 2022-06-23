@@ -52,6 +52,8 @@ public class RestEndpointReport {
     @Path("/viewMonthlySales/{storeID}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewMonthlySales(@PathParam("storeID")String storeID, @PathParam("month")String month){
+		System.out.println(month);
+		System.out.println(storeID);
         return Response.status(Response.Status.OK).entity(service.viewMonthlySales(storeID,month)).build();
     }
     

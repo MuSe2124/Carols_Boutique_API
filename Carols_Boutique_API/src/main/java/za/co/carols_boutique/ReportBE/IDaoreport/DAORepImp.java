@@ -29,6 +29,7 @@ import za.co.carols_boutique.models.Sale;
 import za.co.carols_boutique.models.SaleReport;
 import za.co.carols_boutique.models.Store;
 import za.co.carols_boutique.models.StoreSale;
+import za.co.carols_boutique.yaml.CarolsYAML;
 
 
 /**
@@ -44,7 +45,7 @@ public class DAORepImp implements DAORep {
 	private DAOStoreImp store;
 
 	public DAORepImp() {
-		//CarolsYAML c = new CarolsYAML();
+//		CarolsYAML c = new CarolsYAML();
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -52,7 +53,7 @@ public class DAORepImp implements DAORep {
 		}
 		//String URL = "jdbc:mysql://localhost:3306/carolsboutique";       
 		try {
-			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/carolsboutique", "root", "root");
+			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/carolsboutique", "root", "root");
 			store = new DAOStoreImp();
 		} catch (SQLException e) {
 			e.printStackTrace();
