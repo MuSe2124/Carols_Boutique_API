@@ -10,10 +10,10 @@ import java.util.logging.Logger;
 
 public class IDGenerator {
 
-	private Connection con;
-	private PreparedStatement ps;
-	private ResultSet rs;
-	private int rowsAffected;
+	private static Connection con;
+	private static PreparedStatement ps;
+	private static ResultSet rs;
+	private static int rowsAffected;
 
 	public IDGenerator() {
 		//CarolsYAML c = new CarolsYAML();
@@ -30,7 +30,7 @@ public class IDGenerator {
 		}
 	}
 
-	public String generateID(String name) {
+	public static String generateID(String name) {
 		int x = 0;
 		if (con != null) {
 			try {

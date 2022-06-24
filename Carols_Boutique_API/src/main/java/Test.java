@@ -69,7 +69,7 @@ public class Test {
 //
 //
 //		Not work. Need fix
-		System.out.println(test.prod.removeProductFromInventory("str1", "pro6", "enp5", 1, "10"));
+		System.out.println(test.prod.removeProductFromInventory("str1", "pro6", "emp5", 1, "M"));
 //
 //		Works
 //		System.out.println(test.prod.deleteProduct("TestProd", "cat1"));

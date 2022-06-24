@@ -1,5 +1,6 @@
 package za.co.carols_boutique.ProductBE.IDAOProduct;
 
+import IDGenerator.IDGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -63,7 +64,8 @@ public class DAOProductImp implements DAOProduct {
 				ps = con.prepareStatement("insert into product_category(category,ProductIDs,id) values(?,?,?)");
 				ps.setString(1, categoryID);
 				ps.setString(2, productID);
-				ps.setString(3, "gcvb ");
+				String id = IDGenerator.generateID("pc");
+				ps.setString(3, id);
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
