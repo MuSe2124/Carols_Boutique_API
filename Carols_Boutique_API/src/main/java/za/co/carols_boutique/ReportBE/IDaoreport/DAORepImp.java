@@ -1,5 +1,6 @@
 package za.co.carols_boutique.ReportBE.IDaoreport;
 
+import IDGenerator.IDGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -201,7 +202,7 @@ public class DAORepImp implements DAORep {
 
 	@Override
 	public Report viewTopSellingEmployees(String storeID, String month) {
-		Report report = new Report();
+		Report report = new Report(); 
 		report.setEmpSales(new ArrayList<EmpSale>());
 		if (con != null) {
 			try {
@@ -451,6 +452,7 @@ public class DAORepImp implements DAORep {
 	@Override
 	public Boolean addReview(Review review) {
 		rowsAffected = 0;
+		review.setId(IDGenerator.generateID("Rev"));
 		if (con != null) {
 			try {
 				//String id, String comment, Integer rating, Date date
@@ -471,10 +473,11 @@ public class DAORepImp implements DAORep {
 	@Override
 	public Boolean addCustomer(Customer customer) {
 		rowsAffected = 0;
+		customer.setId(IDGenerator.generateID("cus"));
 		//String id, String name, String phoneNumber, String email
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("Insert into Customer(id,name,phoneNumber,email) values(?,?,?,?)");
+				ps = con.prepareStatement("Insert into Customer(id,name,phoneNumber,emailadress) values(?,?,?,?)");
 				ps.setString(1, customer.getId());
 				ps.setString(2, customer.getName());
 				ps.setString(3, customer.getPhoneNumber());

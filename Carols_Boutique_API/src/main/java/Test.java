@@ -24,14 +24,14 @@ import za.co.carols_boutique.properties.CarolsProperties;
 public class Test {
 
 //	public EmpServiceImp emp;
-//	public RepServiceImp rep;
-	public ProdServiceImp prod;
+	public RepServiceImp rep;
+//	public ProdServiceImp prod;
 //	public StoreServiceImp store;
 
 	public Test() {
 //		emp = new EmpServiceImp();
-//		rep = new RepServiceImp();
-		prod = new ProdServiceImp();
+		rep = new RepServiceImp();
+//		prod = new ProdServiceImp();
 //		store = new StoreServiceImp();
 	}
 
@@ -68,8 +68,8 @@ public class Test {
 //		System.out.println(test.prod.addNewProduct(product, "cat1"));
 //
 //
-//		Not work. Need fix
-		System.out.println(test.prod.removeProductFromInventory("str1", "pro6", "emp5", 1, "M"));
+//		WorkS
+//		System.out.println(test.prod.removeProductFromInventory("str1", "pro6", "emp5", 1, "M"));
 //
 //		Works
 //		System.out.println(test.prod.deleteProduct("TestProd", "cat1"));
@@ -102,9 +102,9 @@ public class Test {
 //		System.out.println(report.toString());
 //		
 //		WORKS
-		System.out.println("\n\nTesting monthly sales");
-		report = test.rep.viewMonthlySales("str6","june");
-		System.out.println(report.toString());
+//		System.out.println("\n\nTesting monthly sales");
+//		report = test.rep.viewMonthlySales("str6","june");
+//		System.out.println(report.toString());
 //		
 //		WORKS
 //		System.out.println("\n\nTesting top selling employees");
@@ -136,14 +136,14 @@ public class Test {
 //		report = test.rep.viewDailySalesReport("1");
 //		System.out.println(report.toString());
 //		
-//		NEED TO GENERATE ID
+//		Works
 //		System.out.println("\n\nTesting add review");
 //		String s = test.rep.addReview(new Review("Great",9));
 //		System.out.println(s);
 //	
-//		NEED TO GENERATE ID
+//		Works
 //		System.out.println("\n\nTesting add custoemr");
-//		s = test.rep.addCustomer(new Customer("Johannes","0794562816","jomarvn@gmail.com"));
+//		String s = test.rep.addCustomer(new Customer("Johannes","0794562816","jomarvn@gmail.com"));
 //		System.out.println(s);
 	}
 }

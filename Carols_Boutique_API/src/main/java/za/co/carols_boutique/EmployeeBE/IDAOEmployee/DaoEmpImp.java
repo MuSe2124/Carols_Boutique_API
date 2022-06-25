@@ -99,7 +99,7 @@ public class DaoEmpImp implements DAOEmp {
 		rowsAffected = 0;
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("Update Employee set id =?,name =?,surname =?,isManager=?,password =?,StoreID=? where id =?");
+				ps = con.prepareStatement("Update Employee set id = ?, name = ?, surname = ?, isManager = ?, password = ?,StoreID = ? where id = ?");
 				ps.setString(1, employee.getId());
 				ps.setString(2, employee.getName());
 				ps.setString(3, employee.getSurname());

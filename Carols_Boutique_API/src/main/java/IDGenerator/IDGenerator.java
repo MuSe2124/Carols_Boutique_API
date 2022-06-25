@@ -29,8 +29,23 @@ public class IDGenerator {
 			e.printStackTrace();
 		}
 	}
+	private static void establisCOn() {
+		//CarolsYAML c = new CarolsYAML();
+		try {//com.mysql.cj.jdbc.Driver
+			Class.forName("com.mysql.cj.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		//String URL = "jdbc:mysql://localhost:3306/carolsboutique";       
+		try {
+			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/carolsboutique", "root", "root");
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	public static String generateID(String name) {
+		establisCOn();
 		int x = 0;
 		if (con != null) {
 			try {
@@ -42,14 +57,14 @@ public class IDGenerator {
 				ps = con.prepareStatement("insert into idgenerator (id, name, completedId) values(?, ?, ?)");
 				ps.setString(1, String.valueOf(x + 101));
 				ps.setString(2, name);
-				ps.setString(3, String.valueOf(x + 101) + " " + name);
+				ps.setString(3, name + " " + String.valueOf(x + 101));
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException ex) {
 				Logger.getLogger(IDGenerator.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 
-		String id = String.valueOf(x + 101) + " " + name;
+		String id = name + " " + String.valueOf(x + 101);
 		return id;
 	}
 }

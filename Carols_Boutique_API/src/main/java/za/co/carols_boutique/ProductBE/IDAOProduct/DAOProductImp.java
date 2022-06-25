@@ -2,13 +2,13 @@ package za.co.carols_boutique.ProductBE.IDAOProduct;
 
 import IDGenerator.IDGenerator;
 import java.sql.Connection;
+import java.sql.Date;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import za.co.carols_boutique.models.Product;
-import java.util.Date;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.models.ProdStore;
@@ -41,7 +41,7 @@ public class DAOProductImp implements DAOProduct {
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("insert into StockTransaction(id, storeID, ProductID, employeeID, NoBefore, NoAdded, Total, date) values(?, ?, ?, ?, ?, ?, ?, ?)");
-				ps.setString(1, "a");
+				ps.setString(1, IDGenerator.generateID("ST"));
 				ps.setString(2, storeID);
 				ps.setString(3, productID);
 				ps.setString(4, employeeID);
@@ -176,7 +176,7 @@ public class DAOProductImp implements DAOProduct {
 
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("select storeID,productID, amount, product.name inner join product on product_store.productid = product.id from store_product where storeID =? and productID =?");
+				ps = con.prepareStatement("select storeID, productID, amount, product.name from store_product inner join product on store_product.productid = product.id  where storeID = ? and productID = ?;");
 				ps.setString(1, storeID);
 				ps.setString(2, productID);
 				rs = ps.executeQuery();
