@@ -2,12 +2,12 @@ package za.co.carols_boutique.models;
 
 import java.io.Serializable;
 
-public class ProdStore implements Serializable{
-   
-    private String storeID;
-    private String productID;
+public class ProdStore implements Serializable {
+
+	private String storeID;
+	private String productID;
 	private String productName;
-    private Integer amount;
+	private Integer amount;
 
 	public ProdStore(String storeID, String productID, String productName, Integer amount) {
 		this.storeID = storeID;

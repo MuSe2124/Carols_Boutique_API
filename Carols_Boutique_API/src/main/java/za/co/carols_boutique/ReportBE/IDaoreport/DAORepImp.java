@@ -1,10 +1,6 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.ReportBE.IDaoreport;
 
-import java.io.FileNotFoundException;
+import IDGenerator.IDGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -17,8 +13,6 @@ import java.util.List;
 import za.co.carols_boutique.models.Customer;
 import za.co.carols_boutique.models.Report;
 import za.co.carols_boutique.models.Review;
-import java.util.Collections;
-import java.util.Properties;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.StoreBE.IDAOStore.DAOStoreImp;
@@ -32,12 +26,12 @@ import za.co.carols_boutique.models.Sale;
 import za.co.carols_boutique.models.SaleReport;
 import za.co.carols_boutique.models.Store;
 import za.co.carols_boutique.models.StoreSale;
-import za.co.carols_boutique.yaml.CarolsYAML;
 
 /**
  *
  * @author HP
  */
+
 public class DAORepImp implements DAORep {
 
 	private Connection con;
@@ -47,7 +41,7 @@ public class DAORepImp implements DAORep {
 	private DAOStoreImp store;
 
 	public DAORepImp() {
-		//CarolsYAML c = new CarolsYAML();
+//		CarolsYAML c = new CarolsYAML();
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -55,7 +49,7 @@ public class DAORepImp implements DAORep {
 		}
 		//String URL = "jdbc:mysql://localhost:3306/carolsboutique";       
 		try {
-			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost/carolsboutique", "root", "root");
+			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/carolsboutique", "root", "root");
 			store = new DAOStoreImp();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -90,11 +84,11 @@ public class DAORepImp implements DAORep {
 		}
 		StoreSale ss = null;
 		for (int i = 0; i < report.getStoreSales().size() - 1; i++) {
-			if (report.getStoreSales().get(i).getSaleTotal() > report.getStoreSales().get(i + 1).getSaleTotal()) {
+			if (report.getStoreSales().get(i).getSaleTotal() < report.getStoreSales().get(i + 1).getSaleTotal()) {
 				ss = report.getStoreSales().get(i);
 				report.getStoreSales().set(i, report.getStoreSales().get(i + 1));
 				report.getStoreSales().set(i + 1, ss);
-				i = 0;
+				i = -1;
 			}
 		}
 
@@ -208,7 +202,7 @@ public class DAORepImp implements DAORep {
 
 	@Override
 	public Report viewTopSellingEmployees(String storeID, String month) {
-		Report report = new Report();
+		Report report = new Report(); 
 		report.setEmpSales(new ArrayList<EmpSale>());
 		if (con != null) {
 			try {
@@ -336,7 +330,7 @@ public class DAORepImp implements DAORep {
 						ResultSet rs3 = ps.executeQuery();
 						rs3.next();
 						Integer total = rs3.getInt("total");
-						
+
 					}
 				}
 			} catch (SQLException ex) {
@@ -375,11 +369,11 @@ public class DAORepImp implements DAORep {
 		}
 		StoreSale ss = null;
 		for (int i = 0; i < report.getStoreSales().size() - 1; i++) {
-			if (report.getStoreSales().get(i).getSaleTotal() < report.getStoreSales().get(i + 1).getSaleTotal()) {
+			if (report.getStoreSales().get(i).getSaleTotal() > report.getStoreSales().get(i + 1).getSaleTotal()) {
 				ss = report.getStoreSales().get(i);
 				report.getStoreSales().set(i, report.getStoreSales().get(i + 1));
 				report.getStoreSales().set(i + 1, ss);
-				i = 0;
+				i = -1;
 			}
 		}
 
@@ -458,6 +452,7 @@ public class DAORepImp implements DAORep {
 	@Override
 	public Boolean addReview(Review review) {
 		rowsAffected = 0;
+		review.setId(IDGenerator.generateID("Rev"));
 		if (con != null) {
 			try {
 				//String id, String comment, Integer rating, Date date
@@ -478,10 +473,11 @@ public class DAORepImp implements DAORep {
 	@Override
 	public Boolean addCustomer(Customer customer) {
 		rowsAffected = 0;
+		customer.setId(IDGenerator.generateID("cus"));
 		//String id, String name, String phoneNumber, String email
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("Insert into Customer(id,name,phoneNumber,email) values(?,?,?,?)");
+				ps = con.prepareStatement("Insert into Customer(id,name,phoneNumber,emailadress) values(?,?,?,?)");
 				ps.setString(1, customer.getId());
 				ps.setString(2, customer.getName());
 				ps.setString(3, customer.getPhoneNumber());

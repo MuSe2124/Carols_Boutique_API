@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.ReportBE.REST;
 
 import jakarta.ws.rs.Consumes;
@@ -20,20 +16,11 @@ import za.co.carols_boutique.models.Customer;
 import za.co.carols_boutique.models.Employee;
 import za.co.carols_boutique.models.Review;
 
-
-
-/**
- *
- * @author Jomar
- */
 @Path("/report")
 public class RestEndpointReport {
     
     private RepService service = new RepServiceImp();
-    
-	
-	
-	
+
     @GET
     @Path("/viewTopAchievingStores/{month}")
     @Produces(MediaType.APPLICATION_JSON)
@@ -52,6 +39,8 @@ public class RestEndpointReport {
     @Path("/viewMonthlySales/{storeID}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewMonthlySales(@PathParam("storeID")String storeID, @PathParam("month")String month){
+		System.out.println(month);
+		System.out.println(storeID);
         return Response.status(Response.Status.OK).entity(service.viewMonthlySales(storeID,month)).build();
     }
     
@@ -80,10 +69,8 @@ public class RestEndpointReport {
     @Path("/viewLeastPerformingStores/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewLeastPerformingStores(@PathParam("month")String month){
-        Response response = null;
-        
+        Response response = null;  
             response = Response.status(Response.Status.OK).entity(service.viewLeastPerformingStores(month)).build();
-        
         return response;
     }
     
@@ -116,14 +103,14 @@ public class RestEndpointReport {
     public Response addCustomer(Customer customer){
         return Response.status(Response.Status.OK).entity(service.addCustomer(customer)).build();
     }
-	
+
 	@GET
-    @Path("/testing")
-    @Produces(MediaType.APPLICATION_JSON)
-    public Employee viewProductReport(){
+	@Path("/testing")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Employee viewProductReport() {
 		Date date = new Date(System.currentTimeMillis());
-		Email email = new Email("newsLetterPromotion","jomarvn@gmail.com","Johannes",date);
-        return new Employee();
-    }
-    
+		Email email = new Email("newsLetterPromotion", "jomarvn@gmail.com", "Johannes", date);
+		return new Employee();
+	}
+
 }
