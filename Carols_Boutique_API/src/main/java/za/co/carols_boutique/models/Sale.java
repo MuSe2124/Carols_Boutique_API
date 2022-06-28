@@ -13,8 +13,9 @@ public class Sale implements Serializable {
 	private String customerEmail;
 	private Date date;
 	private Payment payment;
+	private String promo;
 
-	public Sale(String id, Store store, Employee employee, List<LineItem> lineItems, String customerEmail, Date date, Payment payment) {
+	public Sale(String id, Store store, Employee employee, List<LineItem> lineItems, String customerEmail, Date date, Payment payment, String promo) {
 		this.id = id;
 		this.store = store;
 		this.employee = employee;
@@ -22,6 +23,7 @@ public class Sale implements Serializable {
 		this.customerEmail = customerEmail;
 		this.date = date;
 		this.payment = payment;
+		this.promo = promo;
 	}
 
 	public Sale(Date date, Payment payment) {
@@ -36,12 +38,14 @@ public class Sale implements Serializable {
 		this.payment = payment;
 	}
 
-	public Sale(Store store, Employee employee, List<LineItem> lineItems, String customerID, Date date) {
+	public Sale(Store store, Employee employee, List<LineItem> lineItems, String customerID, Date date, String promo) {
 		this.store = store;
 		this.employee = employee;
 		this.lineItems = lineItems;
 		this.customerEmail = customerID;
 		this.date = date;
+		this.promo = promo;
+
 	}
 
 	public Sale(Store store, String id) {
@@ -79,7 +83,7 @@ public class Sale implements Serializable {
 	public Float calculateTotal() {
 		Float flo = null;
 		for (LineItem lineItem : lineItems) {
-			flo += lineItem.getTotal();
+			flo += lineItem.getProduct().getPrice() * lineItem.getAmount();
 		}
 		return flo;
 	}
@@ -114,6 +118,14 @@ public class Sale implements Serializable {
 
 	public void setPayment(Payment payment) {
 		this.payment = payment;
+	}
+
+	public String getPromo() {
+		return promo;
+	}
+
+	public void setPromo(String promo) {
+		this.promo = promo;
 	}
 
 	@Override

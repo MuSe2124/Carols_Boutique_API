@@ -21,16 +21,10 @@ public class StoreServiceImp implements StoreService {
 	}
 
 	@Override
-	public String loginStore(String storeID, String password) {
+	public Store loginStore(String storeID, String password) {
 		Store store = dao.getStore(storeID, password);
 
-		if (store != null) {
-			ArrayList<Stock> stock = prod.getLowStock(storeID);
-			new StockCheck(stock, storeID);
-			return store.getName() + " had been logged in successfully.";
-		} else {
-			return "Failed to login, store ID or password incorrect. Please try again.";
-		}
+		return store;
 	}
 
 	@Override

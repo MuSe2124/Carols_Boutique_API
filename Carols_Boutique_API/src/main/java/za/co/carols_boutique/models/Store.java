@@ -24,6 +24,13 @@ public class Store implements Serializable {
 		this.password = password;
 	}
 
+	public Store(String id, String password) {
+		this.id = id;
+		this.password = password;
+	}
+	
+	
+
 	public Store() {
 	}
 

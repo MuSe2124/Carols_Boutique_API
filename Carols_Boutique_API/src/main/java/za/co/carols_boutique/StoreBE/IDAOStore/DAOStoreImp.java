@@ -1,5 +1,6 @@
 package za.co.carols_boutique.StoreBE.IDAOStore;
 
+import IDGenerator.IDGenerator;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -10,7 +11,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import za.co.carols_boutique.ProductBE.IDAOProduct.DAOProductImp;
+import za.co.carols_boutique.Utilities.Email;
 import za.co.carols_boutique.models.Employee;
+import za.co.carols_boutique.models.Exchange;
 import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Sale;
@@ -45,7 +49,7 @@ public class DAOStoreImp implements DAOStore {
 		if (con != null) {
 			try {
 				//con.setAutoCommit(false);
-				ps = con.prepareStatement("insert into Store(id,name,location,password) values(?,?,?,?)");
+				ps = con.prepareStatement("insert into Store(id, name, location, password) values(?,?,?,?)");
 				ps.setString(1, store.getId());
 				ps.setString(2, store.getName());
 				ps.setString(3, store.getLocation());
@@ -57,11 +61,7 @@ public class DAOStoreImp implements DAOStore {
 
 			}
 		}
-		if (rowsAffected != 1) {
-			return false;
-		} else {
-			return true;
-		}
+		return rowsAffected == 1;
 	}
 
 	@Override
@@ -69,7 +69,7 @@ public class DAOStoreImp implements DAOStore {
 		Store store = null;
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("Select ID,name,location,password,target from Store where password= ? and ID =?");
+				ps = con.prepareStatement("Select ID, name, location, password, target from Store where password= ? and ID = ?");
 				ps.setString(1, password);
 				ps.setString(2, storeID);
 				rs = ps.executeQuery();
@@ -82,61 +82,95 @@ public class DAOStoreImp implements DAOStore {
 
 			}
 		}
+		new Email("lowStockReminder", store.getId(), new DAOProductImp().getLowStock(store.getId()));
 		return store;
 	}
 
-	/*@Override
-    public Boolean DeleteStore(Integer storeID) {
-        if(con!=null){
-            try {
-                ps = con.prepareStatement("delete from Store where id = ?");
-                ps.setInt(0, storeID);
-                ps.executeQuery();
-                
-                return true;
-            } catch (SQLException e) {
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }*/
-	//missing class or variables?
-	//
-	/*@Override
-    public Boolean addEmployeeToStore(Employee employee) {
-        if(con!= null){
-            try{
-                ps = con.prepareStatement("insert into StoreEmployee(EmpId) values(?)");
-            }catch(SQLException e){
-                e.printStackTrace();
-            }
-        }
-        return false;
-    }*/
-	//missing class or variables?
-	@Override
-	public Boolean addSale(Sale sale) {
-		//String id, String storeID, String employeeID, String lineItemID, String customerID, Date date
-		rowsAffected = 0;
+	private boolean insertLineItems(Sale sale) {
+		Integer discount = getDiscount(sale.getPromo());
+		if (con != null) {
+			for (LineItem li : sale.getLineItems()) {
+				try {
+					ps = con.prepareStatement("insert into lineitem(id, sale, product, amount, total, size) values(?,?,?,?,?,?)");
+					ps.setString(1, IDGenerator.generateID("LI"));
+					ps.setString(2, sale.getId());
+					ps.setString(3, li.getId());
+					ps.setInt(4, li.getAmount());
+					ps.setFloat(5, li.getTotal() - (li.getTotal() / discount));
+					ps.setString(6, li.getSize());
+					rowsAffected += ps.executeUpdate();
+				} catch (SQLException ex) {
+					Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
+				}
+			}
+		}
+		return rowsAffected == sale.getLineItems().size();
+	}
+
+	public Integer getDiscount(String promo) {
+		Integer discount = 0;
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("insert into Sale(id,storeID,employeeID,customerEmail,date) values(?,?,?,?,?)");
+				ps = con.prepareStatement("select discount from promo where code = ?");
+				ps.setString(1, promo);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					discount = rs.getInt("discount");
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return discount;
+	}
+
+	@Override
+	public Boolean addSale(Sale sale) {
+		insertLineItems(sale);
+		if (con != null) {
+			try {
+				if (sale.getPromo() != null) {
+					ps = con.prepareStatement("insert into Sale(id, storeID, employeeID, customerEmail, date, promo) values(?,?,?,?,?,?)");
+					ps.setString(6, sale.getPromo());
+
+				} else {
+					ps = con.prepareStatement("insert into Sale(id, storeID, employeeID, customerEmail, date) values(?,?,?,?,?)");
+				}
 				ps.setString(1, sale.getId());
 				ps.setString(2, sale.getStore().getId());
 				ps.setString(3, sale.getEmployee().getId());
 				ps.setString(4, sale.getCustomerEmail());
 				ps.setDate(5, (Date) sale.getDate());
+
 				rowsAffected = ps.executeUpdate();
 
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		if (rowsAffected != 1) {
-			return false;
-		} else {
-			return true;
-		}
+		return rowsAffected == 1;
+	}
+
+	public Boolean addReturn(Sale sale) {
+		Integer rows = 0;
+//		if (con != null) {
+//			try {
+//				
+//			} catch (SQLException ex) {
+//				Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
+//			}
+//		}
+		return rowsAffected + rows == 2;
+	}
+
+	public Boolean addExchange(Exchange exchange) {
+		
+		return rowsAffected == 1;
+	}
+
+	public static void main(String[] args) {
+		DAOStoreImp dao = new DAOStoreImp();
+		System.out.println(dao.addReturn(dao.getSale("s1")));
 	}
 
 	@Override
@@ -144,7 +178,7 @@ public class DAOStoreImp implements DAOStore {
 		rowsAffected = 0;
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("update Store set active = ? where id =?");
+				ps = con.prepareStatement("update Store set active = ? where id = ?");
 				ps.setBoolean(1, false);
 				ps.setString(2, storeID);
 				rowsAffected = ps.executeUpdate();
@@ -153,32 +187,10 @@ public class DAOStoreImp implements DAOStore {
 				e.printStackTrace();
 			}
 		}
-		if (rowsAffected != 1) {
-			return false;
-		} else {
-			return true;
-		}
+		return rowsAffected == 1;
+
 	}
 
-	/*@Override
-    public Boolean deleteEmployeeFromStore(String employeeID,String StoreID) {
-        rowsAffected = 0; 
-       if(con!=null){
-           try{
-           ps = con.prepareStatement("delete EmpStore where id =?");
-           ps.setString(1,employeeID);
-           rowsAffected =ps.executeUpdate();
-           
-           }catch(SQLException e){
-               e.printStackTrace();
-           }
-       }
-        if(rowsAffected!=1){
-       return false;
-       }else{
-           return true;
-       }
-    }*/
 	private Integer getStoresTotal(List<String> sales, String storeID) {
 		Integer total = 0;
 		for (String sale : sales) {
@@ -234,11 +246,8 @@ public class DAOStoreImp implements DAOStore {
 				e.printStackTrace();
 			}
 		}
-		if (rowsAffected != 1) {
-			return false;
-		} else {
-			return true;
-		}
+		return rowsAffected == 1;
+
 	}
 
 	@Override
@@ -299,7 +308,8 @@ public class DAOStoreImp implements DAOStore {
 								rs4.getString("id"),
 								rs4.getString("sale"),
 								product,
-								rs4.getInt("amount")
+								rs4.getInt("amount"),
+								rs4.getString("size")
 						);
 						sale.getLineItems().add(li);
 					}
@@ -310,4 +320,21 @@ public class DAOStoreImp implements DAOStore {
 		}
 		return sale;
 	}
+
+	public ArrayList<String> getCustomere() {
+		ArrayList<String> emails = new ArrayList<>();
+		if (con != null) {
+			try {
+				ps = con.prepareStatement("select emailAdress from customer");
+				rs = ps.executeQuery();
+				while (rs.next()) {
+					emails.add(rs.getString("emailAdress"));
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return emails;
+	}
+
 }

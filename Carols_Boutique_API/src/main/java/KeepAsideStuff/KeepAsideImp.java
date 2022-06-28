@@ -89,7 +89,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 				ps.setString(2, keepAside.getStoreID());
 				ps.setDate(3, (Date) keepAside.getDate());
 				ps.setString(4, keepAside.getCustomerEmail());
-				ps.setString(5, keepAside.getLineItem().getID());
+				ps.setString(5, keepAside.getLineItem().getId());
 				ps.setTime(6, keepAside.getTime());
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
@@ -102,7 +102,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 
 	@Override  //Switch name
 	public boolean addItem(LineItem lineItem) {
-		new Email("", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getLineItem());
 		Product prod = lineItem.getProduct();
 
 		rowsAffected = 0;
@@ -115,7 +115,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 				ps.setString(2, keepAside.getStoreID());
 				ps.setDate(3, (Date) keepAside.getDate());
 				ps.setString(4, keepAside.getCustomerEmail());
-				ps.setString(5, keepAside.getLineItem().getID());
+				ps.setString(5, keepAside.getLineItem().getId());
 				ps.setTime(6, keepAside.getTime());
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {

@@ -29,7 +29,7 @@ public class Phone extends Thread {
 		String user = " <user>GROUP1</user >";
 		String pass = "<pass>group1</pass>";
 		String number = "<msisdn>" + phoneNumber + "</msisdn >";
-		String message = "<message>" + "Your order of " + lineItem.getAmounnt() + lineItem.getProduct().getName() + " is ready for pickup from " + store.getName() + "\nSincerely Carols Boutique</message >";
+		String message = "<message>" + "Your order of " + lineItem.getAmount() + lineItem.getProduct().getName() + " is ready for pickup from " + store.getName() + "\nSincerely Carols Boutique</message >";
 		String foot = "</smsreq>";
 
 		String stuff = head + dateTime + user + pass + number + message + foot;
