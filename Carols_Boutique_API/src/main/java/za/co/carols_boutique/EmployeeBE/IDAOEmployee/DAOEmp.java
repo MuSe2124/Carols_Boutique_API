@@ -4,7 +4,7 @@ import za.co.carols_boutique.models.Employee;
 
 public interface DAOEmp {
 
-	Boolean addEmployee(Employee employee);
+	String addEmployee(Employee employee);
 
 	Employee getEmployee(String employeeID, String password, String StoreID);
 

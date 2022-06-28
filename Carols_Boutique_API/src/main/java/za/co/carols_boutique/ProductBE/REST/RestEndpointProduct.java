@@ -66,5 +66,12 @@ public class RestEndpointProduct {
 	public Response refund(Refund refund) {
 		return Response.status(Response.Status.OK).entity(service.refund(refund)).build();
 	}
+	
+	@GET
+	@Path("/getCategories")
+	@Produces (MediaType.APPLICATION_JSON)
+	public Response getCategories(){
+		return Response.status(Response.Status.OK).entity(service.getCategories()).build();
+	}
 
 }

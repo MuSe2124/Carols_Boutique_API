@@ -26,13 +26,7 @@ public class EmpServiceImp implements EmpService {
 
 	@Override
 	public String register(Employee employee) {
-		Boolean b = dao.addEmployee(employee);
-
-		if (b) {
-			return "Employee has been registered successfully.";
-		} else {
-			return "Failed to register employee, please try again.";
-		}
+		return dao.addEmployee(employee);
 	}
 
 	@Override

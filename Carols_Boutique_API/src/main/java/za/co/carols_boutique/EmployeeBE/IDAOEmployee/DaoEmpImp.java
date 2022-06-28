@@ -32,7 +32,7 @@ public class DaoEmpImp implements DAOEmp {
 	}
 
 	@Override
-	public Boolean addEmployee(Employee employee) {
+	public String addEmployee(Employee employee) {
 		rowsAffected = 0;
 		if (con != null) {
 			try {
@@ -50,7 +50,10 @@ public class DaoEmpImp implements DAOEmp {
 				e.printStackTrace();
 			}
 		}
-		return rowsAffected == 1;
+		if(rowsAffected == 1){
+		return "You have registered, Your employee ID is: "+employee.getId();
+	}
+		return "Could not register";
 	}
 
 	@Override
