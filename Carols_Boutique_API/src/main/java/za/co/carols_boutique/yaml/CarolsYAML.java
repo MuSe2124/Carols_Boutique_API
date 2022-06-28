@@ -9,8 +9,6 @@ import java.io.FileReader;
 import java.util.Map;
 import org.yaml.snakeyaml.Yaml;
 
-
-
 /**
  *
  * @author muaad
@@ -26,7 +24,7 @@ public class CarolsYAML {
 
     public CarolsYAML() {
         try {
-            br = new BufferedReader(new FileReader("C:\\Users\\muaad\\OneDrive\\Desktop\\Carols_Boutique_BE\\CarolsDatabase.yml"));
+            br = new BufferedReader(new FileReader("CarolsDatabase.yml"));
             yaml = new Yaml();
             data = yaml.load(br);
             setUrl(data.get("url"));
