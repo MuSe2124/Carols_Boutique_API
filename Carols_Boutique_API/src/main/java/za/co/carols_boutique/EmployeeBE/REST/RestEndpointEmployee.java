@@ -53,11 +53,4 @@ public class RestEndpointEmployee {
 	public Response delete(String employeeID) {
 		return Response.status(Response.Status.OK).entity(service.deleteEmployee(employeeID)).build();
 	}
-
-	@GET
-	@Path("/test")
-	@Produces(MediaType.APPLICATION_JSON)
-	public String test() {
-		return "I'm here";
-	}
 }

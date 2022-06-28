@@ -5,12 +5,11 @@ import za.co.carols_boutique.models.Store;
 
 public interface StoreService {
 
-	String loginStore(String storeID, String password);
+	Store loginStore(String storeID, String password);
 
 	String registerStore(Store store);
 
 	String addSale(Sale sale);
 
 	String deleteStore(String storeID);
-
 }

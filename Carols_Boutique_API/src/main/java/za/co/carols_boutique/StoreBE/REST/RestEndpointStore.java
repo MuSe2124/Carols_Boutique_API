@@ -48,4 +48,11 @@ public class RestEndpointStore {
 	public Response delete(@PathParam("storeID") String storeID) {
 		return Response.status(Response.Status.OK).entity(service.deleteStore(storeID)).build();
 	}
+	
+	@POST
+	@Path("/test")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Store test() {
+		return new Store("ID", "PASSWORD");
+	}
 }

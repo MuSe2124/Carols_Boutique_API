@@ -31,7 +31,6 @@ import za.co.carols_boutique.models.StoreSale;
  *
  * @author HP
  */
-
 public class DAORepImp implements DAORep {
 
 	private Connection con;
@@ -186,7 +185,8 @@ public class DAORepImp implements DAORep {
 								rs4.getString("id"),
 								rs4.getString("sale"),
 								product,
-								rs4.getInt("amount")
+								rs4.getInt("amount"),
+								rs4.getString("size")
 						);
 						sale.getLineItems().add(li);
 					}
@@ -202,7 +202,7 @@ public class DAORepImp implements DAORep {
 
 	@Override
 	public Report viewTopSellingEmployees(String storeID, String month) {
-		Report report = new Report(); 
+		Report report = new Report();
 		report.setEmpSales(new ArrayList<EmpSale>());
 		if (con != null) {
 			try {

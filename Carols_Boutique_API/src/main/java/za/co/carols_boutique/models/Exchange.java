@@ -40,5 +40,4 @@ public class Exchange implements Serializable {
 	public void setPostLineItem(LineItem postLineItem) {
 		this.postLineItem = postLineItem;
 	}
-
 }

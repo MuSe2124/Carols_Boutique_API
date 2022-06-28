@@ -116,7 +116,7 @@ public class Email extends Thread {
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
-			break;
+			break; 
 
 			case "sendReceipt":
                 try {
@@ -148,7 +148,7 @@ public class Email extends Thread {
 			}
 			break;
 
-			case "send24hReminder":
+			case "send24hReminder"://DOne
                 try {
 				setupServerProperties();
 				send24hReminder(recipient, preLineItem);
@@ -158,7 +158,7 @@ public class Email extends Thread {
 			}
 			break;
 
-			case "send36hReminder":
+			case "send36hReminder"://DOene
                 try {
 				setupServerProperties();
 				send36hReminder(recipient, preLineItem);
@@ -168,7 +168,7 @@ public class Email extends Thread {
 			}
 			break;
 
-			case "send48hReminder":
+			case "send48hReminder"://DOne
                 try {
 				setupServerProperties();
 				send48hReminder(recipient);
@@ -178,7 +178,7 @@ public class Email extends Thread {
 			}
 			break;
 
-			case "keepAsideCreated":
+			case "keepAsideCreated"://DOne
                 try {
 				setupServerProperties();
 				keepAsideCreated(recipient, preLineItem, code);
@@ -188,7 +188,7 @@ public class Email extends Thread {
 			}
 			break;
 
-			case "lowStockReminder":
+			case "lowStockReminder"://done
                 try {
 				setupServerProperties();
 				lowStockReminder(recipient, products);
@@ -384,7 +384,7 @@ public class Email extends Thread {
 			table = table + ((count % 2 != 0) ? "<tr style=\"background-color:lightgrey\"d>" : "<tr style =\"background-color:rgb(166, 166, 166)\">")
 					+ "<td>" + lineitem.getProduct().getId() + "</td>"
 					+ "<td>" + lineitem.getProduct().getName() + "</td>"
-					+ "<td>" + lineitem.getAmounnt() + "</td>"
+					+ "<td>" + lineitem.getAmount() + "</td>"
 					+ "<td>" + lineitem.getTotal() + "</td>"
 					+ "</tr>";
 			total = total + lineitem.getTotal();
@@ -492,7 +492,7 @@ public class Email extends Thread {
 			table = table + ((count % 2 != 0) ? "<tr style=\"background-color:lightgrey\"d>" : "<tr style =\"background-color:rgb(166, 166, 166)\">")
 					+ "<td>" + lineitem.getProduct().getId() + "</td>"
 					+ "<td>" + lineitem.getProduct().getName() + "</td>"
-					+ "<td>" + lineitem.getAmounnt() + "</td>"
+					+ "<td>" + lineitem.getAmount() + "</td>"
 					+ "<td>" + lineitem.getTotal() + "</td>"
 					+ "</tr>";
 			total = total + lineitem.getTotal();
@@ -510,13 +510,13 @@ public class Email extends Thread {
 				+ "<tr style =\"background-color:rgb(255, 77, 77)\">"
 				+ "<td>" + prelineitem.getProduct().getId() + "</td>"
 				+ "<td>" + prelineitem.getProduct().getName() + "</td>"
-				+ "<td>" + prelineitem.getAmounnt() + "</td>"
+				+ "<td>" + prelineitem.getAmount() + "</td>"
 				+ "<td>" + "-" + prelineitem.getTotal() + "</td>"
 				+ "</tr>"
 				+ "<tr style =\"background-color:lightgreen\">"
 				+ "<td>" + postlineitem.getProduct().getId() + "</td>"
 				+ "<td>" + postlineitem.getProduct().getName() + "</td>"
-				+ "<td>" + postlineitem.getAmounnt() + "</td>"
+				+ "<td>" + postlineitem.getAmount() + "</td>"
 				+ "<td>" + "+" + postlineitem.getTotal() + "</td>"
 				+ "</tr>";
 		total = total + postlineitem.getTotal() - prelineitem.getTotal();
@@ -669,7 +669,7 @@ public class Email extends Thread {
 				+ "\n"
 				+ "</body>\n"
 				+ "</html>";
-		s = s.replace("??amount??", "" + lineItem.getAmounnt());
+		s = s.replace("??amount??", "" + lineItem.getAmount());
 		s = s.replace("??product??", lineItem.getProduct().getName());
 		return s;
 	}
@@ -687,7 +687,7 @@ public class Email extends Thread {
 				+ "\n"
 				+ "</body>\n"
 				+ "</html>";
-		s = s.replace("??amount??", "" + lineItem.getAmounnt());
+		s = s.replace("??amount??", "" + lineItem.getAmount());
 		s = s.replace("??product??", lineItem.getProduct().getName());
 		return s;
 	}
@@ -723,7 +723,7 @@ public class Email extends Thread {
 				+ "</body>\n"
 				+ "</html>";
 		s = s.replace("??ID??", code);
-		s = s.replace("??Number??", "" + lineItem.getAmounnt());
+		s = s.replace("??Number??", "" + lineItem.getAmount());
 		s = s.replace("??Product??", lineItem.getProduct().getName());
 		return s;
 	}
