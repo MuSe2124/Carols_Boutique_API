@@ -1,5 +1,7 @@
 package za.co.carols_boutique.ProductBE.ServiceProduct;
 
+import java.util.ArrayList;
+import za.co.carols_boutique.models.Category;
 import za.co.carols_boutique.models.Exchange;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Refund;
@@ -21,5 +23,7 @@ public interface ProdService {
 	String exchange(Exchange exchange);
 
 	void checkLowStock(String storeID);
+	
+	ArrayList<Category> getCategories();
 
 }

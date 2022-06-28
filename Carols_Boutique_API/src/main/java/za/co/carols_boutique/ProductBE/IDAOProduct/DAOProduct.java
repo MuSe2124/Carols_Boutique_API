@@ -1,6 +1,7 @@
 package za.co.carols_boutique.ProductBE.IDAOProduct;
 
 import java.util.ArrayList;
+import za.co.carols_boutique.models.Category;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Stock;
 
@@ -26,6 +27,8 @@ public interface DAOProduct {
 	Boolean deleteProduct(String productID, String catid);
 
 	Boolean addCatagory(String catID, String name, String description);
+	
+	ArrayList<Category> getCategories();
 
 	Boolean deleteCategory(String CategoryID);
 

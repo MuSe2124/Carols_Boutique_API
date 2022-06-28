@@ -11,6 +11,7 @@ import java.util.ArrayList;
 import za.co.carols_boutique.models.Product;
 import java.util.logging.Level;
 import java.util.logging.Logger;
+import za.co.carols_boutique.models.Category;
 import za.co.carols_boutique.models.ProdStore;
 import za.co.carols_boutique.models.Stock;
 
@@ -374,6 +375,28 @@ public class DAOProductImp implements DAOProduct {
 			}
 		}
 		return prods;
+	}
+
+	@Override
+	public ArrayList<Category> getCategories() {
+		ArrayList<Category> categories = new ArrayList<>();
+		if(con!=null){
+			try {
+				ps = con.prepareStatement("select id, name, description from category");
+				rs = ps.executeQuery();
+				while(rs.next()){
+					Category cat = new Category(
+												rs.getString("id"),
+												rs.getString("name"),
+												rs.getString("desciption")
+					);
+					categories.add(cat);
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(DAOProductImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return categories;
 	}
 
 }
