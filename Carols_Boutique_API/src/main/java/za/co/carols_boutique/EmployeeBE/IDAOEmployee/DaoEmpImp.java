@@ -58,7 +58,8 @@ public class DaoEmpImp implements DAOEmp {
 
 	@Override
 	public Employee getEmployee(String employeeID, String password, String StoreID) {
-
+		
+		Employee emp = null;
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("select id,name,surname,isManager,password from Employee where id = ? and password =? and StoreID=?");
@@ -68,14 +69,14 @@ public class DaoEmpImp implements DAOEmp {
 				ps.setString(3, StoreID);
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					return new Employee(rs.getString("id"), rs.getString("name"), rs.getString("surname"), rs.getString("password"), rs.getBoolean("isManager"));
+				emp = new Employee(rs.getString("id"), rs.getString("name"), rs.getString("surname"), rs.getString("password"), rs.getBoolean("isManager"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 
 			}
 		}
-		return null;
+		return emp;
 	}
 
 	@Override

@@ -14,14 +14,10 @@ public class EmpServiceImp implements EmpService {
 	}
 
 	@Override
-	public String login(String employeeID, String password, String storeID) {
-		Employee employee = dao.getEmployee(employeeID, password, storeID);
+	public Employee login(String employeeID, String password, String storeID) {
+		return dao.getEmployee(employeeID, password, storeID);
 
-		if (employee != null) {
-			return "Welcome " + employee.getName() + ", you have logged in successfully.";
-		} else {
-			return "Failed to log in, employee ID or password incorrect. Please try again.";
-		}
+		
 	}
 
 	@Override

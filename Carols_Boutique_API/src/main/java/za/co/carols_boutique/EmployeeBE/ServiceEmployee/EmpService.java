@@ -4,7 +4,7 @@ import za.co.carols_boutique.models.Employee;
 
 public interface EmpService {
 
-	String login(String employeeID, String password, String storeID);
+	Employee login(String employeeID, String password, String storeID);
 
 	String register(Employee employee);
 
