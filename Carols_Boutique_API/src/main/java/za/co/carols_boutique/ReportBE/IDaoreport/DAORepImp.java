@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 import za.co.carols_boutique.models.Customer;
 import za.co.carols_boutique.models.Report;
@@ -16,6 +17,7 @@ import za.co.carols_boutique.models.Review;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.StoreBE.IDAOStore.DAOStoreImp;
+import za.co.carols_boutique.Utilities.Email;
 import za.co.carols_boutique.models.EmpSale;
 import za.co.carols_boutique.models.Employee;
 import za.co.carols_boutique.models.LineItem;
@@ -485,9 +487,12 @@ public class DAORepImp implements DAORep {
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
+
 			}
 		}
+		Date date = new Date(System.currentTimeMillis());
+		System.out.println(date);
+		new Email("newsLetterPromotion", customer.getEmail(), "Welcome", date); //Need to put promo code in
 		return rowsAffected == 1;
 	}
-
 }

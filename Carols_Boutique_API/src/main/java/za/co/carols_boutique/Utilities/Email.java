@@ -107,8 +107,7 @@ public class Email extends Thread {
 	public void run() {
 
 		switch (action) {
-
-			case "sendPromotions":
+			case "sendPromotions"://Done
                 try {
 				setupServerProperties();
 				sendPromotions(recipients, promocode);
@@ -118,7 +117,7 @@ public class Email extends Thread {
 			}
 			break; 
 
-			case "sendReceipt":
+			case "sendReceipt"://Done
                 try {
 				setupServerProperties();
 				sendReceipt(recipient, sale);
@@ -128,7 +127,7 @@ public class Email extends Thread {
 			}
 			break;
 
-			case "sendAmendedReceipt":
+			case "sendAmendedReceipt"://Done
                 try {
 				setupServerProperties();
 				sendAmendedReceipt(recipient, sale, preLineItem, postLineItem);
@@ -138,7 +137,7 @@ public class Email extends Thread {
 			}
 			break;
 
-			case "sendRefund":
+			case "sendRefund": //Done
                 try {
 				setupServerProperties();
 				sendRefund(recipient, sale);
@@ -197,7 +196,7 @@ public class Email extends Thread {
 				e.printStackTrace();
 			}
 			break;
-			case "newsLetterPromotion":
+			case "newsLetterPromotion"://Done
                 try {
 				setupServerProperties();
 				newsLetterPromotion(recipient, date, promocode);

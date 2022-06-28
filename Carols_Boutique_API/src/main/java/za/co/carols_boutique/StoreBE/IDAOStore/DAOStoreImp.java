@@ -144,6 +144,8 @@ public class DAOStoreImp implements DAOStore {
 
 				rowsAffected = ps.executeUpdate();
 
+				new Email("sendReceipt", sale.getCustomerEmail(), sale);
+
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
@@ -151,26 +153,64 @@ public class DAOStoreImp implements DAOStore {
 		return rowsAffected == 1;
 	}
 
+	@Override
 	public Boolean addReturn(Sale sale) {
 		Integer rows = 0;
-//		if (con != null) {
-//			try {
-//				
-//			} catch (SQLException ex) {
-//				Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
-//			}
-//		}
-		return rowsAffected + rows == 2;
+		if (con != null) {
+			try {
+				for (LineItem li : sale.getLineItems()) {
+					ps = con.prepareStatement("insert into returns(id, lineItemId, Sale, Product, amount, total, size) select id, Id, Sale, Product, amount, total, size from lineItem where lineItem.id = ?");
+					ps.setString(1, li.getId());
+					rowsAffected += ps.executeUpdate();
+					ps = con.prepareStatement("Delete from lineitem where id = ?");
+					ps.setString(1, li.getId());
+					rows += ps.executeUpdate();
+					new Email("sendRefund", sale.getCustomerEmail(), sale);
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return rowsAffected + rows == sale.getLineItems().size() * 2;
 	}
 
+	@Override
 	public Boolean addExchange(Exchange exchange) {
-		
-		return rowsAffected == 1;
-	}
 
-	public static void main(String[] args) {
-		DAOStoreImp dao = new DAOStoreImp();
-		System.out.println(dao.addReturn(dao.getSale("s1")));
+		if (con != null) {
+			try {
+				ps = con.prepareStatement("insert into exchange (id, saleID, preLineItem, PostLineItem) values (?, ?, ?, ?)");
+				ps.setString(1, IDGenerator.generateID("exc"));
+				ps.setString(2, exchange.getSale().getId());
+				ps.setString(3, exchange.getPreLineItem().getId());
+				ps.setString(4, exchange.getPostLineItem().getId());
+				rowsAffected = ps.executeUpdate();
+
+				ps = con.prepareStatement("insert into returns(id, lineItemId, Sale, Product, amount, total, size) select id, Id, Sale, Product, amount, total, size from lineItem where lineItem.id = ?");
+				ps.setString(1, exchange.getPreLineItem().getId());
+				rowsAffected += ps.executeUpdate();
+
+				ps = con.prepareStatement("Delete from lineitem where id = ?");
+				ps.setString(1, exchange.getPreLineItem().getId());
+				rowsAffected += ps.executeUpdate();
+
+				ps = con.prepareStatement("insert into lineitem(id, sale, product, amount, total, size) values(?, ?, ?, ?, ?, ?)");
+				ps.setString(1, exchange.getPostLineItem().getId());
+				ps.setString(2, exchange.getSale().getId());
+				ps.setString(3, exchange.getPostLineItem().getProduct().getId());
+				ps.setInt(4, exchange.getPostLineItem().getAmount());
+				ps.setFloat(5, exchange.getPostLineItem().getTotal());
+				ps.setString(6, exchange.getPostLineItem().getSize());
+				rowsAffected += ps.executeUpdate();
+
+				new Email("sendAmendedReceipt", exchange.getSale().getCustomerEmail(), exchange.getSale(), exchange.getPreLineItem(), exchange.getPostLineItem());
+
+			} catch (SQLException ex) {
+				Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+
+		}
+		return rowsAffected == 4;
 	}
 
 	@Override
@@ -256,11 +296,11 @@ public class DAOStoreImp implements DAOStore {
 		sale.setLineItems(new ArrayList<LineItem>());
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("select storeID, employeeID, cutomerEmail, date from sale where saleID = ?");
+				ps = con.prepareStatement("select storeID, employeeID, CustomerEmail, date from sale where ID = ?");
 				ps.setString(1, saleID);
 				rs = ps.executeQuery();
 				if (rs.next()) {
-					sale.setCustomerEmail(rs.getString("customerEmail"));
+					sale.setCustomerEmail(rs.getString("CustomerEmail"));
 					sale.setId(saleID);
 					ps = con.prepareStatement("select name, location, password, target from store where id = ?");
 					ps.setString(1, rs.getString("storeID"));
@@ -321,7 +361,8 @@ public class DAOStoreImp implements DAOStore {
 		return sale;
 	}
 
-	public ArrayList<String> getCustomere() {
+	@Override
+	public ArrayList<String> getCustomers() {
 		ArrayList<String> emails = new ArrayList<>();
 		if (con != null) {
 			try {
@@ -337,4 +378,8 @@ public class DAOStoreImp implements DAOStore {
 		return emails;
 	}
 
+	public boolean sendPromotionEmail(String prooCode) {
+		new Email("sendPromotions", getCustomers(), prooCode);
+		return rowsAffected == getCustomers().size();
+	}
 }
