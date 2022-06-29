@@ -1,14 +1,6 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package IBTStuff;
 
-/**
- *
- * @author Mustafaa Osman
- */
+import IDGenerator.IDGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
@@ -57,10 +49,9 @@ public class IBTImp implements IBTInt {
 		rowsAffected = 0;
 		if (con != null) {
 			try {
-				//con.setAutoCommit(false);
 				ps = con.prepareStatement("insert into ibt(id, lineItem, customer) values(?,?,?)");
-//				ps.setString(1,);
-				ps.setString(2, lineItem.getID());
+				ps.setString(1,IDGenerator.generateID("IBT"));
+				ps.setString(2, lineItem.getId());
 				ps.setString(3, customer.getId());
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
@@ -77,20 +68,16 @@ public class IBTImp implements IBTInt {
 
 	@Override
 	public boolean sendCustomerMessage() {
-//		Phone phone = new Phone();
-//		return phone != null;
 		Phone phone = new Phone(lineItem, customer.getPhoneNumber(), store);
 		return phone != null;
 	}
 
 	//insert into keepasidearchive(id, storeID, date, customeremail, lineitem, time) select id, storeID, date, customeremail, lineitem, time from keepaside where keepaside.id = ?
-	public boolean removeKeepAside() {
+	public boolean removeIBT(String ibtId) {
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("insert into ibtArchive(id, lineItem, customer) select id, lineItem, customr from ibt where ibt.id = ?");
-//				ps.setString(1, );
-				ps.setString(2, lineItem.getID());
-				ps.setString(3, customer.getId());
+				ps.setString(1, ibtId);
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

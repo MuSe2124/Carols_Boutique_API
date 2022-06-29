@@ -1,76 +1,65 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.models;
 
 import java.io.Serializable;
 import java.util.Date;
 
-/**
- *
- * @author muaad
- */
-public class Review implements Serializable{
-    
-    private String id;
-    private String comment;
-    private Integer rating;
-    private Date date;
+public class Review implements Serializable {
 
-    public Review(String id, String comment, Integer rating, Date date) {
-        this.id = id;
-        this.comment = comment;
-        this.rating = rating;
-        this.date = date;
-    }
+	private String id;
+	private String comment;
+	private Integer rating;
+	private Date date;
 
-    public Review(String comment, Integer rating) {
-        this.comment = comment;
-        this.rating = rating;
-    }
-    
-    
+	public Review(String id, String comment, Integer rating, Date date) {
+		this.id = id;
+		this.comment = comment;
+		this.rating = rating;
+		this.date = date;
+	}
 
-    public Review() {
-    }
+	public Review(String comment, Integer rating) {
+		this.comment = comment;
+		this.rating = rating;
+	}
 
-    public String getId() {
-        return id;
-    }
+	public Review() {
+	}
 
-    public void setId(String id) {
-        this.id = id;
-    }
+	public String getId() {
+		return id;
+	}
 
-    public String getComment() {
-        return comment;
-    }
+	public void setId(String id) {
+		this.id = id;
+	}
 
-    public void setComment(String comment) {
-        this.comment = comment;
-    }
+	public String getComment() {
+		return comment;
+	}
 
-    public Integer getRating() {
-        return rating;
-    }
+	public void setComment(String comment) {
+		this.comment = comment;
+	}
 
-    public void setRating(Integer rating) {
-        this.rating = rating;
-    }
+	public Integer getRating() {
+		return rating;
+	}
 
-    public Date getDate() {
-        return date;
-    }
+	public void setRating(Integer rating) {
+		this.rating = rating;
+	}
 
-    public void setDate(Date date) {
-        this.date = date;
-    }
+	public Date getDate() {
+		return date;
+	}
 
-    @Override
-    public String toString() {
-        return "Review{" + "id=" + id + ", comment=" + comment + ", rating=" + rating + ", date=" + date + '}';
-    }
-    
-    
+	public void setDate(Date date) {
+		this.date = date;
+	}
+
+	@Override
+	public String toString() {
+		return "Review{" + "id=" + id + ", comment=" + comment + ", rating=" + rating + ", date=" + date + '}';
+	}
+
 }

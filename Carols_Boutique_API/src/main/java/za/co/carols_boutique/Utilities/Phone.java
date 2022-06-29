@@ -1,8 +1,3 @@
-
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.Utilities;
 
 import jakarta.ws.rs.client.Client;
@@ -14,12 +9,6 @@ import jakarta.ws.rs.core.Response;
 import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.models.Store;
 
-
-
-/**
- *
- * @author Mustafaa Osman
- */
 public class Phone extends Thread {
 
 	private LineItem lineItem;
@@ -32,8 +21,7 @@ public class Phone extends Thread {
 		this.store = store;
 		this.start();
 	}
-	
-	
+
 	@Override
 	public void run() {
 		String head = "<smsreq>";
@@ -41,9 +29,8 @@ public class Phone extends Thread {
 		String user = " <user>GROUP1</user >";
 		String pass = "<pass>group1</pass>";
 		String number = "<msisdn>" + phoneNumber + "</msisdn >";
-		String message = "<message>" + "Your order of " + lineItem.getAmounnt() + lineItem.getProduct().getName() + " is ready for pickup from " + store.getName() + "\nSincerely Carols Boutique</message >";
+		String message = "<message>" + "Your order of " + lineItem.getAmount() + lineItem.getProduct().getName() + " is ready for pickup from " + store.getName() + "\nSincerely Carols Boutique</message >";
 		String foot = "</smsreq>";
-		
 
 		String stuff = head + dateTime + user + pass + number + message + foot;
 
@@ -53,4 +40,3 @@ public class Phone extends Thread {
 		Response response = webTarget.request(MediaType.APPLICATION_XML).post(Entity.xml(stuff));
 	}
 }
-

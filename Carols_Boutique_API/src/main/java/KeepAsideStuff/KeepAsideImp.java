@@ -1,7 +1,3 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package KeepAsideStuff;
 
 import java.sql.Connection;
@@ -12,20 +8,13 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Time;
 import java.time.LocalTime;
-import java.util.ArrayList;
-import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import za.co.carols_boutique.EmployeeBE.IDAOEmployee.DaoEmpImp;
 import za.co.carols_boutique.Utilities.Email;
 import za.co.carols_boutique.models.KeepAside;
 import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.models.Product;
-import za.co.carols_boutique.properties.CarolsProperties;
 
-/**
- * @author Mustafaa Osman
- */
 public class KeepAsideImp extends Thread implements KeepAsideInt {
 
 	Time time;
@@ -35,13 +24,12 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 	private ResultSet rs;
 	private PreparedStatement ps;
 	private int rowsAffected;
-	//String id, String name, String surname, Boolean isManager
 
 	public KeepAsideImp(KeepAside keepAside) {
 
 		time = Time.valueOf(LocalTime.MIN);
 
-		try {//com.mysql.cj.jdbc.Driver
+		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
@@ -80,7 +68,6 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getLineItem());
 		return true;
 	}
-//Action recipient lineItemn
 
 	@Override
 	public boolean sendReminder36h(KeepAside keepAside) {
@@ -102,7 +89,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 				ps.setString(2, keepAside.getStoreID());
 				ps.setDate(3, (Date) keepAside.getDate());
 				ps.setString(4, keepAside.getCustomerEmail());
-				ps.setString(5, keepAside.getLineItem().getID());
+				ps.setString(5, keepAside.getLineItem().getId());
 				ps.setTime(6, keepAside.getTime());
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
@@ -115,7 +102,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 
 	@Override  //Switch name
 	public boolean addItem(LineItem lineItem) {
-		new Email("", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getLineItem());
 		Product prod = lineItem.getProduct();
 
 		rowsAffected = 0;
@@ -128,7 +115,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 				ps.setString(2, keepAside.getStoreID());
 				ps.setDate(3, (Date) keepAside.getDate());
 				ps.setString(4, keepAside.getCustomerEmail());
-				ps.setString(5, keepAside.getLineItem().getID());
+				ps.setString(5, keepAside.getLineItem().getId());
 				ps.setTime(6, keepAside.getTime());
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {

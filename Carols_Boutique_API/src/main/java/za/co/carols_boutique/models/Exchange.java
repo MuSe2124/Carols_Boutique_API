@@ -1,54 +1,44 @@
-/*
- * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
- * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
- */
 package za.co.carols_boutique.models;
 
 import java.io.Serializable;
+import za.co.carols_boutique.models.Sale;
 
-/**
- *
- * @author Jomar
- */
-public class Exchange implements Serializable{
-    
-    Sale sale;
-    LineItem preLineItem;
-    LineItem postLineItem;
+public class Exchange implements Serializable {
 
-    public Exchange() {
-    }
+	Sale sale;
+	LineItem preLineItem;
+	LineItem postLineItem;
 
-    public Exchange(Sale sale, LineItem preLineItem, LineItem postLineItem) {
-        this.sale = sale;
-        this.preLineItem = preLineItem;
-        this.postLineItem = postLineItem;
-    }
+	public Exchange() {
+	}
 
-    public Sale getSale() {
-        return sale;
-    }
+	public Exchange(Sale sale, LineItem preLineItem, LineItem postLineItem) {
+		this.sale = sale;
+		this.preLineItem = preLineItem;
+		this.postLineItem = postLineItem;
+	}
 
-    public void setSale(Sale sale) {
-        this.sale = sale;
-    }
+	public Sale getSale() {
+		return sale;
+	}
 
-    public LineItem getPreLineItem() {
-        return preLineItem;
-    }
+	public void setSale(Sale sale) {
+		this.sale = sale;
+	}
 
-    public void setPreLineItem(LineItem preLineItem) {
-        this.preLineItem = preLineItem;
-    }
+	public LineItem getPreLineItem() {
+		return preLineItem;
+	}
 
-    public LineItem getPostLineItem() {
-        return postLineItem;
-    }
+	public void setPreLineItem(LineItem preLineItem) {
+		this.preLineItem = preLineItem;
+	}
 
-    public void setPostLineItem(LineItem postLineItem) {
-        this.postLineItem = postLineItem;
-    }
-    
-    
-    
+	public LineItem getPostLineItem() {
+		return postLineItem;
+	}
+
+	public void setPostLineItem(LineItem postLineItem) {
+		this.postLineItem = postLineItem;
+	}
 }
