@@ -17,6 +17,14 @@ public class Store implements Serializable {
 		this.password = password;
 		this.target = target;
 	}
+	
+	public Store(String name, String location, String password, Float target) {
+        this.name = name;
+        this.location = location;
+        this.password = password;
+        this.target = target;
+    }
+
 
 	public Store(String name, String location, String password) {
 		this.name = name;

@@ -388,7 +388,7 @@ public class DAOProductImp implements DAOProduct {
 					Category cat = new Category(
 												rs.getString("id"),
 												rs.getString("name"),
-												rs.getString("desciption")
+												rs.getString("description")
 					);
 					categories.add(cat);
 				}
