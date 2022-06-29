@@ -17,7 +17,7 @@ public class DaoEmpImp implements DAOEmp {
 	private String URL;
 
 	public DaoEmpImp() {
-		CarolsYAML c = new CarolsYAML();
+//		CarolsYAML c = new CarolsYAML();
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -25,7 +25,7 @@ public class DaoEmpImp implements DAOEmp {
 		}
 		//String URL = "jdbc:mysql://localhost:3306/carolsboutique";       
 		try {
-			con = (Connection) DriverManager.getConnection(c.getUrl(), c.getUsername(), c.getPassword());
+			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/carolsboutique","root", "root");
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
