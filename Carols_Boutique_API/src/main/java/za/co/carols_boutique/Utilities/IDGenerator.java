@@ -50,9 +50,9 @@ public class IDGenerator {
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("select count(*) from idgenerator");
-				rs = ps.executeQuery();
-				if (rs.next()) {
-					x = rs.getInt("count(*)");
+				ResultSet resSet = ps.executeQuery();
+				if (resSet.next()) {
+					x = resSet.getInt("count(*)");
 				}
 				ps = con.prepareStatement("insert into idgenerator (id, name, completedId) values(?, ?, ?)");
 				ps.setString(1, String.valueOf(x + 101));

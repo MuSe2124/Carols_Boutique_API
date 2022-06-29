@@ -362,7 +362,7 @@ public class DAOProductImp implements DAOProduct {
 		ArrayList<Stock> prods = new ArrayList();
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("select product.id,product.name,store_product.amount from store_product inner join product on product.id = store_product.product.id where amount < 5");
+				ps = con.prepareStatement("select product.id,product.name,store_product.amount from store_product inner join product on product.id = store_product.productID where amount < 5");
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					Stock stock = new Stock(rs.getString("product.id"),

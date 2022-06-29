@@ -28,7 +28,7 @@ public class DAOStoreImp implements DAOStore {
 	private int rowsAffected;
 
 	public DAOStoreImp() {
-//        CarolsYAML c = new CarolsYAML();
+
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {

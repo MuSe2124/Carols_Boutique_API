@@ -26,7 +26,6 @@ public class StoreServiceImp implements StoreService {
 
 		if (store != null) {
 			ArrayList<Stock> stock = prod.getLowStock(storeID);
-			new StockCheck(stock, storeID);
 		}
 		return store;
 	}

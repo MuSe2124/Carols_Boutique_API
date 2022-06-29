@@ -21,9 +21,6 @@ public class RestEndpointEmployee {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response login(Employee employee) {
-		System.out.println(employee.getId());
-		System.out.println(employee.getPassword());
-		System.out.println(employee.getStoreID());
 		return Response.status(Response.Status.OK).entity(service.login(employee.getId(), employee.getPassword(), employee.getStoreID())).build();
 	}
 
