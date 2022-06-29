@@ -12,4 +12,6 @@ public interface StoreService {
 	String addSale(Sale sale);
 
 	String deleteStore(String storeID);
+        
+        Sale getSale(String saleID);
 }

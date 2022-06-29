@@ -48,6 +48,13 @@ public class RestEndpointStore {
 	public Response delete(@PathParam("storeID") String storeID) {
 		return Response.status(Response.Status.OK).entity(service.deleteStore(storeID)).build();
 	}
+        
+        @GET
+        @Path("/getSale/{saleID}")
+        @Produces(MediaType.APPLICATION_JSON)
+        public Response getSale(@PathParam("saleID") String saleID){
+            return Response.status(Response.Status.OK).entity(service.getSale(saleID)).build();
+        }
 	
 	@POST
 	@Path("/test")
