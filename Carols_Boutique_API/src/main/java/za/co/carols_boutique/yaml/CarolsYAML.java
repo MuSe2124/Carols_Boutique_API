@@ -2,35 +2,40 @@ package za.co.carols_boutique.yaml;
 
 import java.io.BufferedReader;
 import java.io.FileReader;
-import java.util.Map;
+import java.util.HashMap;
 import org.yaml.snakeyaml.Yaml;
 
+/**
+ *
+ * @author muaad
+ */
 public class CarolsYAML {
+    private BufferedReader br;
+    private Yaml yaml;
+    private HashMap data;
+    private String url;
+    private String password;
+    private String username;
 
-	private String url;
-	private String username;
-	private String password;
-	private BufferedReader br;
-	private Yaml yaml;
-	private Map<String, String> data;
-
-	public CarolsYAML() {
-		try {
-			br = new BufferedReader(new FileReader("C:\\Users\\muaad\\OneDrive\\Desktop\\Carols_Boutique_BE\\CarolsDatabase.yml"));
-			yaml = new Yaml();
-			data = yaml.load(br);
-			setUrl(data.get("url"));
-			setPassword(data.get("password"));
-			setUsername(data.get("username"));
-		} catch (Exception e) {
-			e.printStackTrace();
-		} finally {
-			try {
-				br.close();
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-		}
+    public CarolsYAML() {
+        try {
+            br = new BufferedReader(new FileReader("CarolsDatabase.yml"));
+            yaml = new Yaml();
+            data = yaml.load(br);
+            setUrl(data.get("url").toString());
+            setPassword(data.get("password").toString());
+            setUsername(data.get("username").toString());
+        } catch (Exception e) {
+            e.printStackTrace();
+        } finally {
+            try {
+                br.close();
+            } catch (Exception e) {
+                e.printStackTrace();
+            }
+        }
+        
+        
 //        try {
 //            is = new FileInputStream(new File("C:\\Users\\muaad\\OneDrive\\Desktop\\Carols_Boutique_BE\\CarolsDatabase.yml"));
 //        } catch (FileNotFoundException ex) {

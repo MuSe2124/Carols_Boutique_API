@@ -1,6 +1,7 @@
 package za.co.carols_boutique.models;
 
 import java.io.Serializable;
+import za.co.carols_boutique.models.Sale;
 
 public class Exchange implements Serializable {
 

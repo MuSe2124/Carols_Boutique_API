@@ -1,6 +1,7 @@
 package za.co.carols_boutique.models;
 
 import java.io.Serializable;
+import za.co.carols_boutique.models.Product;
 
 public class LineItem implements Serializable {
 
