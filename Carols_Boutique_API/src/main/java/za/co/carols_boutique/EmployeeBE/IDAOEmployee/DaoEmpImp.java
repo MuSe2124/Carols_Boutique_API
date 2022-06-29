@@ -5,6 +5,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import za.co.carols_boutique.Utilities.IDGenerator;
 import za.co.carols_boutique.models.Employee;
 import za.co.carols_boutique.yaml.CarolsYAML;
 
@@ -34,6 +35,7 @@ public class DaoEmpImp implements DAOEmp {
 	@Override
 	public String addEmployee(Employee employee) {
 		rowsAffected = 0;
+		employee.setId(IDGenerator.generateID("emp"));
 		if (con != null) {
 			try {
 

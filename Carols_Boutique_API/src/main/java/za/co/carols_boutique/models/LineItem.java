@@ -24,6 +24,17 @@ public class LineItem implements Serializable {
 		this.amount = amounnt;
 	}
 
+	public LineItem(Product product, Integer amounnt) {
+		this.product = product;
+		this.amount = amounnt;
+	}
+
+	public LineItem(Product product, Integer amount, String size) {
+		this.product = product;
+		this.amount = amount;
+		this.size = size;
+	}
+
 	public LineItem() {
 	}
 
@@ -70,10 +81,9 @@ public class LineItem implements Serializable {
 	public Float getTotal() {
 		return product.getPrice() * amount;
 	}
-	
+
 	@Override
 	public String toString() {
 		return "LineItem{" + "id=" + id + ", saleID=" + saleID + ", product=" + product.getName() + ", amounnt=" + amount + '}';
 	}
-
 }

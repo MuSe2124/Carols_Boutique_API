@@ -1,10 +1,6 @@
-package KeepAsideStuff;
+package za.co.carols_boutique.Utilities;
 
-import jakarta.ws.rs.Consumes;
-import jakarta.ws.rs.POST;
-import jakarta.ws.rs.Path;
-import jakarta.ws.rs.Produces;
-import jakarta.ws.rs.core.MediaType;
+
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -21,9 +17,12 @@ import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.models.Product;
 
 public class KeepAsideImp extends Thread implements KeepAsideInt {
+	public static void main(String[] args) {
+		new KeepAsideImp(new KeepAside(IDGenerator.generateID("KA"), "str1", new java.util.Date(System.currentTimeMillis()), "mustafaaOsman339@gmail.com", new LineItem("li3", IDGenerator.generateID("sa"), new Product("pro6", "Produvt", "Description", 500F, "M"), 1, "M"), new Time(System.currentTimeMillis())));
+	}
 
-	Time time;
-	KeepAside keepAside;
+	private Time time;
+	private KeepAside keepAside;
 
 	private Connection con;
 	private ResultSet rs;
@@ -51,8 +50,11 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 	@Override
 	public void run() {
 		addItem(keepAside.getLineItem());
+		System.out.println("Beofre 1sr");
 		try {
-			KeepAsideImp.sleep(86400000); //24 hours in milliseconds
+//			KeepAsideImp.sleep(86400000); //24 hours in milliseconds
+			KeepAsideImp.sleep(3000); //24 hours in milliseconds
+			System.out.println("After 1st");
 		} catch (InterruptedException ex) {
 			Logger.getLogger(KeepAsideImp.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -60,7 +62,9 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 			sendReminder36h(keepAside);
 		}
 		try {
-			KeepAsideImp.sleep(43200000); //12 hours in milliseconds
+//			KeepAsideImp.sleep(43200000); //12 hours in milliseconds
+			KeepAsideImp.sleep(3000); //12 hours in milliseconds
+			System.out.println("After 2nd");
 		} catch (InterruptedException ex) {
 			Logger.getLogger(KeepAsideImp.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -96,21 +100,19 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 				ps.setDate(3, (Date) keepAside.getDate());
 				ps.setString(4, keepAside.getCustomerEmail());
 				ps.setString(5, keepAside.getLineItem().getId());
-				ps.setTime(6, keepAside.getTime());
+				ps.setTime(6, new Time(System.currentTimeMillis()));
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
 		return rowsAffected == 1;
-
 	}
 
 	@Override  //Switch name
 	public boolean addItem(LineItem lineItem) {
 		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getLineItem());
 		Product prod = lineItem.getProduct();
-
 		rowsAffected = 0;
 		if (con != null) {
 			try {
@@ -145,7 +147,6 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 							rs.getString("customerEmail"),
 							rs.getTime("Time"));
 				}
-
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}

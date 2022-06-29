@@ -1,4 +1,4 @@
-package IDGenerator;
+package za.co.carols_boutique.Utilities;
 
 import java.sql.Connection;
 import java.sql.DriverManager;

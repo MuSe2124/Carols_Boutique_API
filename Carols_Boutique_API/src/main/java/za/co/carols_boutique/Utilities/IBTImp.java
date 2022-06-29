@@ -1,6 +1,6 @@
-package IBTStuff;
+package za.co.carols_boutique.Utilities;
 
-import IDGenerator.IDGenerator;
+import za.co.carols_boutique.Utilities.IDGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
