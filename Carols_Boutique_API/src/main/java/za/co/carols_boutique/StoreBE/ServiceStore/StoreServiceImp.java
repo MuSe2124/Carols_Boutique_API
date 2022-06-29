@@ -60,4 +60,14 @@ public class StoreServiceImp implements StoreService {
 			return "Failed to delete store, please try again.";
 		}
 	}
+
+    @Override
+    public Sale getSale(String saleID) {
+        Sale sale = dao.getSale(saleID);
+        if (sale != null) {
+            return sale;
+        }else{
+            return null;
+        }
+    }
 }
