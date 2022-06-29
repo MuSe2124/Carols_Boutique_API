@@ -10,15 +10,17 @@ public class KeepAside implements Serializable {
 	private String storeID;
 	private Date date;
 	private String customerEmail;
-	private LineItem lineItem;
+	private String productID;
+	private Integer amount;
 	private Time time; //Format of the time "11:18:11" "hh:mm:ss"
 
-	public KeepAside(String id, String storeID, Date date, String customerEmail, LineItem lineItem, Time time) {
+	public KeepAside(String id, String storeID, Date date, String customerEmail, String productID, Integer amount, Time time) {
 		this.id = id;
 		this.storeID = storeID;
 		this.date = date;
 		this.customerEmail = customerEmail;
-		this.lineItem = lineItem;
+		this.productID = productID;
+		this.amount = amount;
 		this.time = time;
 	}
 
@@ -30,11 +32,12 @@ public class KeepAside implements Serializable {
 		this.time = time;
 	}
 
-	public KeepAside(String storeID, Date date, String customerEmail, LineItem lineItem) {
+	public KeepAside(String storeID, Date date, String customerEmail, String productID, Integer amount) {
 		this.storeID = storeID;
 		this.date = date;
 		this.customerEmail = customerEmail;
-		this.lineItem = lineItem;
+		this.productID = productID;
+		this.amount = amount;
 	}
 
 	public KeepAside() {
@@ -72,8 +75,20 @@ public class KeepAside implements Serializable {
 		this.customerEmail = customerEmail;
 	}
 
-	public LineItem getLineItem() {
-		return lineItem;
+	public String getProductID() {
+		return productID;
+	}
+
+	public void setProductID(String productID) {
+		this.productID = productID;
+	}
+
+	public Integer getAmount() {
+		return amount;
+	}
+
+	public void setAmount(Integer amount) {
+		this.amount = amount;
 	}
 
 	public Time getTime() {
@@ -86,6 +101,6 @@ public class KeepAside implements Serializable {
 
 	@Override
 	public String toString() {
-		return "KeepAside{" + "id=" + id + ", storeID=" + storeID + ", date=" + date + ", customerEmail=" + customerEmail + ", lineItem=" + lineItem + ", time=" + time + '}';
+		return "KeepAside{" + "id=" + id + ", storeID=" + storeID + ", date=" + date + ", customerEmail=" + customerEmail + ", productID=" + productID + ", amount=" + amount + ", time=" + time + '}';
 	}
 }

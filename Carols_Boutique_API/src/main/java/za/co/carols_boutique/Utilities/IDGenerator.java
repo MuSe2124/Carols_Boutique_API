@@ -29,6 +29,7 @@ public class IDGenerator {
 			e.printStackTrace();
 		}
 	}
+
 	private static void establisCOn() {
 		//CarolsYAML c = new CarolsYAML();
 		try {//com.mysql.cj.jdbc.Driver
@@ -57,14 +58,14 @@ public class IDGenerator {
 				ps = con.prepareStatement("insert into idgenerator (id, name, completedId) values(?, ?, ?)");
 				ps.setString(1, String.valueOf(x + 101));
 				ps.setString(2, name);
-				ps.setString(3, name + " " + String.valueOf(x + 101));
+				ps.setString(3, name + String.valueOf(x + 101));
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException ex) {
 				Logger.getLogger(IDGenerator.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
 
-		String id = name + " " + String.valueOf(x + 101);
+		String id = name + String.valueOf(x + 101);
 		return id;
 	}
 }

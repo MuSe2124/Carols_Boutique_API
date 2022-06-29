@@ -18,6 +18,7 @@ import za.co.carols_boutique.models.Exchange;
 import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Sale;
+import za.co.carols_boutique.models.Stock;
 import za.co.carols_boutique.models.Store;
 
 public class DAOStoreImp implements DAOStore {
@@ -81,8 +82,36 @@ public class DAOStoreImp implements DAOStore {
 
 			}
 		}
-		new Email("lowStockReminder", store.getId(), new DAOProductImp().getLowStock(store.getId()));
+		ArrayList<Stock> lowStock = new DAOProductImp().getLowStock(storeID);
+//		if (lowStock.size() > 0) {
+//			System.out.println("Sending email");
+			new Email("lowStockReminder", getManagerEmail(storeID), lowStock);
+//		}
 		return store;
+	}
+
+	private String getManagerEmail(String storeID) {
+		String email = null;
+		if (con != null) {
+			try {
+				ps = con.prepareStatement("Select ManagerEmail from manager where storeID = ?");
+				ps.setString(1, storeID);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					email = rs.getString("ManagerEmail");
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(DAOStoreImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return email;
+	}
+
+	public static void main(String[] args) {
+//		System.out.println(new DAOStoreImp().getStore("str1", "pass").toString());
+//		System.out.println(new DAOProductImp().getLowStock("str1").size());
+//		new Email("test", "mustafaaosman339@gmail.com");
+		
 	}
 
 	private boolean insertLineItems(Sale sale) {

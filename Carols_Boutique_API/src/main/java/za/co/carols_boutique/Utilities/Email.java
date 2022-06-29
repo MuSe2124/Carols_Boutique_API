@@ -241,8 +241,8 @@ public class Email extends Thread {
 	}
 
 	public void sendEmail() throws MessagingException {
-		String fromUser = "jomarvn@gmail.com";
-		String userPassword = "J0hannes";
+		String fromUser = "carols.boutique.domain@gmail.com";
+		String userPassword = "qfdqfmqeznacwbzl";
 		String emailHost = "smtp.gmail.com";
 		Transport transport = newSession.getTransport("smtp");
 		transport.connect(emailHost, fromUser, userPassword);

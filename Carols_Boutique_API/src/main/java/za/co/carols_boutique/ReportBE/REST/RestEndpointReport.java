@@ -109,7 +109,7 @@ public class RestEndpointReport {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Employee viewProductReport() {
 		Date date = new Date(System.currentTimeMillis());
-		Email email = new Email("newsLetterPromotion", "jomarvn@gmail.com", "Johannes", date);
+		Email email = new Email("newsLetterPromotion", "mustafaaosman339@gmail.com", "Johannes", date);
 		return new Employee();
 	}
 

@@ -23,20 +23,20 @@ public class DAOProductImp implements DAOProduct {
 	private int rowsAffected;
 
 //String id, String name, String description, Float price
-    public DAOProductImp() {
+	public DAOProductImp() {
 //        CarolsYAML c = new CarolsYAML();
-        try {//com.mysql.cj.jdbc.Driver
-            Class.forName("com.mysql.jdbc.Driver");
-        } catch (ClassNotFoundException e) {
-            e.printStackTrace();
-        }
-        //String URL = "jdbc:mysql://localhost:3306/carolsboutique";       
-        try {
+		try {//com.mysql.cj.jdbc.Driver
+			Class.forName("com.mysql.jdbc.Driver");
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+		//String URL = "jdbc:mysql://localhost:3306/carolsboutique";       
+		try {
 			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/carolsboutique", "root", "root");
-        } catch (SQLException e) {
-            e.printStackTrace();
-        }
-    }
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 
 	private Boolean addTransaction(String storeID, String productID, String employeeID, Integer noBefore, Integer noAdded, Integer total, Date currentDate) {
 		if (con != null) {
@@ -362,13 +362,14 @@ public class DAOProductImp implements DAOProduct {
 		ArrayList<Stock> prods = new ArrayList();
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("select product.id,product.name,store_product.amount from store_product inner join product on product.id = store_product.product.id where amount < 5");
+				ps = con.prepareStatement("select product.id,product.name,store_product.amount from store_product inner join product on product.id = store_product.productid where amount < 5");
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					Stock stock = new Stock(rs.getString("product.id"),
 							rs.getString("product.name"),
 							rs.getInt("store_product.amount")
 					);
+					prods.add(stock);
 				}
 			} catch (SQLException ex) {
 				Logger.getLogger(DAOProductImp.class.getName()).log(Level.SEVERE, null, ex);
@@ -380,15 +381,15 @@ public class DAOProductImp implements DAOProduct {
 	@Override
 	public ArrayList<Category> getCategories() {
 		ArrayList<Category> categories = new ArrayList<>();
-		if(con!=null){
+		if (con != null) {
 			try {
 				ps = con.prepareStatement("select id, name, description from category");
 				rs = ps.executeQuery();
-				while(rs.next()){
+				while (rs.next()) {
 					Category cat = new Category(
-												rs.getString("id"),
-												rs.getString("name"),
-												rs.getString("description")
+							rs.getString("id"),
+							rs.getString("name"),
+							rs.getString("description")
 					);
 					categories.add(cat);
 				}
