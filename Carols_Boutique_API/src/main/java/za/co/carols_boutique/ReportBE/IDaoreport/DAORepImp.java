@@ -42,7 +42,7 @@ public class DAORepImp implements DAORep {
 	private DAOStoreImp store;
 
 	public DAORepImp() {
-//		CarolsYAML c = new CarolsYAML();
+
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.cj.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -50,7 +50,7 @@ public class DAORepImp implements DAORep {
 		}
 		//String URL = "jdbc:mysql://localhost:3306/carolsboutique";       
 		try {
-			con = (Connection) DriverManager.getConnection("jdbc:mysql://localhost:3306/carolsboutique", "root", "root");
+			con = (Connection) DriverManager.getConnection("jdbc:mysql://223.223.223.223:3306/carolsboutique", "root", "root");
 			store = new DAOStoreImp();
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -281,7 +281,6 @@ public class DAORepImp implements DAORep {
 	@Override
 	public Report viewStoresThatAchievedTarget(String month) {
 		Report report = new Report();
-		List<StoreSale> storeSales = new ArrayList<>();
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("select id from store");
@@ -294,21 +293,16 @@ public class DAORepImp implements DAORep {
 				ps = con.prepareStatement("select name, target, total from store where total > target");
 				rs = ps.executeQuery();
 				while (rs.next()) {
-
-					System.out.println(rs.getString("name"));
-
 					StoreSale ss = new StoreSale(
 							rs.getString("name"),
 							rs.getFloat("total"),
 							rs.getFloat("target"));
-					storeSales.add(ss);
+					report.getStoreSales().add(ss);
 				}
-				report.setStoreSales(storeSales);
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-
 		return report;
 	}
 
