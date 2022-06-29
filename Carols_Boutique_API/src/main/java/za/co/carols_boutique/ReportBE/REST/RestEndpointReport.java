@@ -14,6 +14,7 @@ import za.co.carols_boutique.ReportBE.ServiceReport.RepServiceImp;
 import za.co.carols_boutique.Utilities.Email;
 import za.co.carols_boutique.models.Customer;
 import za.co.carols_boutique.models.Employee;
+import za.co.carols_boutique.models.Report;
 import za.co.carols_boutique.models.Review;
 
 @Path("/report")
@@ -24,8 +25,8 @@ public class RestEndpointReport {
     @GET
     @Path("/viewTopAchievingStores/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewTopAchievingStores(@PathParam("month")String month){
-        return Response.status(Response.Status.OK).entity(service.viewTopAchievingStores(month)).build();
+    public Report viewTopAchievingStores(@PathParam("month")String month){
+        return service.viewTopAchievingStores(month);
     }
     
     @GET
