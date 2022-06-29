@@ -7,9 +7,10 @@ import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import za.co.carols_boutique.models.LineItem;
+import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Store;
 
-public class Phone extends Thread {
+public class Phone {
 
 	private LineItem lineItem;
 	private String phoneNumber;
@@ -19,10 +20,12 @@ public class Phone extends Thread {
 		this.lineItem = lineItem;
 		this.phoneNumber = phoneNumber;
 		this.store = store;
-		this.start();
 	}
 
-	@Override
+	public static void main(String[] args) {
+		new Phone(new LineItem(new Product("pro6", "This is a prodcut"), 1), "0748035093", new Store("This is a store name", "Location", "Pass")).run();
+	}
+
 	public void run() {
 		String head = "<smsreq>";
 		String dateTime = "<datetime>2022/05/20,10:10:00< / datetime >";

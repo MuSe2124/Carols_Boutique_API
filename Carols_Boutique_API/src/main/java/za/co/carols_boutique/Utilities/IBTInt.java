@@ -1,4 +1,4 @@
-package IBTStuff;
+package za.co.carols_boutique.Utilities;
 
 public interface IBTInt {
 

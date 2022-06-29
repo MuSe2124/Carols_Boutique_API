@@ -1,6 +1,6 @@
 package za.co.carols_boutique.StoreBE.IDAOStore;
 
-import IDGenerator.IDGenerator;
+import za.co.carols_boutique.Utilities.IDGenerator;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -45,20 +45,19 @@ public class DAOStoreImp implements DAOStore {
 	//String id, String name, String location, String password
 	@Override
 	public Boolean addStore(Store store) {
+		store.setId(IDGenerator.generateID("str"));
 		rowsAffected = 0;
 		if (con != null) {
 			try {
-				//con.setAutoCommit(false);
-				ps = con.prepareStatement("insert into Store(id, name, location, password) values(?,?,?,?)");
+				ps = con.prepareStatement("insert into Store(id, name, location, password, target) values(?,?,?,?,?)");
 				ps.setString(1, store.getId());
 				ps.setString(2, store.getName());
 				ps.setString(3, store.getLocation());
 				ps.setString(4, store.getPassword());
+				ps.setFloat(5, store.getTarget());
 				rowsAffected = ps.executeUpdate();
-
 			} catch (SQLException e) {
 				e.printStackTrace();
-
 			}
 		}
 		return rowsAffected == 1;

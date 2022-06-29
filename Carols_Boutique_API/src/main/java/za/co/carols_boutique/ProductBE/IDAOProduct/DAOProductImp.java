@@ -1,6 +1,6 @@
 package za.co.carols_boutique.ProductBE.IDAOProduct;
 
-import IDGenerator.IDGenerator;
+import za.co.carols_boutique.Utilities.IDGenerator;
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;

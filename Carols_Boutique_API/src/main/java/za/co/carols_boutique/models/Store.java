@@ -70,6 +70,16 @@ public class Store implements Serializable {
 		return null;
 	}
 
+	public Float getTarget() {
+		return target;
+	}
+
+	public void setTarget(Float target) {
+		this.target = target;
+	}
+	
+	
+
 	@Override
 	public String toString() {
 		return "Store{" + "id=" + id + ", name=" + name + ", location=" + location + '}';
