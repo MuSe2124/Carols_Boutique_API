@@ -130,6 +130,13 @@ public class DAOProductImp implements DAOProduct {
 			}
 			Date currentDate = new Date(System.currentTimeMillis());
 			Integer total = amount + current;
+			System.out.println(storeID);
+			System.out.println(productID);
+			System.out.println(employeeID);
+			System.out.println(current);
+			System.out.println(amount);
+			System.out.println(total);
+			System.out.println(currentDate);
 			if (addTransaction(storeID, productID, employeeID, current, amount, total, currentDate)) {
 				try {
 					ps = con.prepareStatement("update store_product set amount = ? where productID = ? and store_product.storeID = ? and size = ?");
