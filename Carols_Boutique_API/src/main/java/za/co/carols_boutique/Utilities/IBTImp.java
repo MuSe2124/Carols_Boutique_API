@@ -128,11 +128,11 @@ public class IBTImp {
 
 	public void message(IBT ibt) {
 		String head = "<smsreq>";
-		String dateTime = "<datetime>2022/05/20,10:10:00< / datetime >";
-		String user = " <user>GROUP1</user >";
+		String dateTime = "<datetime>2022/05/20,10:10:00</datetime>";
+		String user = " <user>GROUP1</user>";
 		String pass = "<pass>group1</pass>";
-		String number = "<msisdn>" + ibt.getCustomerPhone() + "</msisdn >";
-		String message = "<message>" + "Your order of " + ibt.getAmount() + getProductName(ibt.getProductID()) + " is ready for pickup from our " + getStoreName(ibt.getStoreID()) + " branch\nSincerely Carols Boutique</message >";
+		String number = "<msisdn>" + ibt.getCustomerPhone() + "</msisdn>";
+		String message = "<message>" + "Your order of " + ibt.getAmount() + getProductName(ibt.getProductID()) + " is ready for pickup from our " + getStoreName(ibt.getStoreID()) + " branch\nSincerely Carols Boutique</message>";
 		String foot = "</smsreq>";
 
 		String stuff = head + dateTime + user + pass + number + message + foot;
