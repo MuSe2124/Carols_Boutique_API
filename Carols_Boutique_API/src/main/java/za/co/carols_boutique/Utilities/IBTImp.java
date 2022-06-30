@@ -12,27 +12,27 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.logging.Level;
+import java.util.logging.Logger;
 import za.co.carols_boutique.models.Customer;
 import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.Utilities.Phone;
+import za.co.carols_boutique.models.IBT;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Store;
 
-public class IBTImp implements IBTInt {
+public class IBTImp {
 
-	private LineItem lineItem;
-	private Customer customer;
-	private Store store;
+	private IBT ibt;
 
 	private Connection con;
 	private ResultSet rs;
 	private PreparedStatement ps;
 	private int rowsAffected;
 
-	public IBTImp(LineItem lineItem, Customer customer, Store store) {
-		this.lineItem = lineItem;
-		this.customer = customer;
-		this.store = store;
+	public IBTImp(IBT ibt) {
+
+		this.ibt = ibt;
 
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -47,58 +47,92 @@ public class IBTImp implements IBTInt {
 		}
 	}
 
-	@Override
-	public boolean createIBT() {
-
-		Product prod = lineItem.getProduct();
-
-		rowsAffected = 0;
+	private String getProductName(String prodID) {
+		String name = "";
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("insert into ibt(id, lineItem, customer) values(?,?,?)");
-				ps.setString(1,IDGenerator.generateID("IBT"));
-				ps.setString(2, lineItem.getId());
-				ps.setString(3, customer.getId());
+				ps = con.prepareStatement("select name from product where id = ?");
+				ps.setString(1, prodID);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					name = rs.getString("name");
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return name;
+	}
+
+	public boolean createIBT() {
+		ibt.setId(IDGenerator.generateID("IBT"));
+		if (con != null) {
+			try {
+				ps = con.prepareStatement("insert into ibt(id, product, amount, customerPhone, size) values(?, ?, ?, ?, ?)");
+				ps.setString(1, ibt.getId());
+				ps.setString(2, ibt.getProductID());
+				ps.setInt(3, ibt.getAmount());
+				ps.setString(4, ibt.getCustomerPhone());
+				ps.setString(5, ibt.getSize());
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
+		try {
+			Thread.sleep(7200000);
+			message(ibt);
+		} catch (InterruptedException ex) {
+			Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
+		}
 		return rowsAffected == 1;
 	}
 
-	@Override
-	public boolean sendMessageToOtherStore() {
-		return false;
-	}
-
-	@Override
-	public boolean sendCustomerMessage() {
-		Phone phone = new Phone(lineItem, customer.getPhoneNumber(), store);
-		return phone != null;
-	}
-
+//	public boolean sendCustomerMessage() {
+//		Phone phone = new Phone(lineItem, customer.getPhoneNumber(), store);
+//		return phone != null;
+//	}
 	//insert into keepasidearchive(id, storeID, date, customeremail, lineitem, time) select id, storeID, date, customeremail, lineitem, time from keepaside where keepaside.id = ?
 	public boolean removeIBT(String ibtId) {
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("insert into ibtArchive(id, lineItem, customer) select id, lineItem, customr from ibt where ibt.id = ?");
+				ps = con.prepareStatement("insert into ibtArchive(id, product, amount, customerPhone, size) select id, product, amount, customerPhone, size from ibt where ibt.id = ?");
 				ps.setString(1, ibtId);
 				rowsAffected = ps.executeUpdate();
+				ps = con.prepareStatement("delete from ibt where id = ?");
+				ps.setString(1, ibtId);
+				rowsAffected += ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return rowsAffected == 1;
+		return rowsAffected == 2;
 	}
-	
-	public void message(String phoneNumber, String producID, Integer amount, Store store) {
+
+	private String getStoreName(String storeID) {
+		String storeName = "";
+		if (con != null) {
+			try {
+				ps = con.prepareStatement("select name from store where id = ?");
+				ps.setString(1, storeID);
+				rs = ps.executeQuery();
+				if (rs.next()) {
+					storeName = rs.getString("name");
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return storeName;
+	}
+
+	public void message(IBT ibt) {
 		String head = "<smsreq>";
 		String dateTime = "<datetime>2022/05/20,10:10:00< / datetime >";
 		String user = " <user>GROUP1</user >";
 		String pass = "<pass>group1</pass>";
-		String number = "<msisdn>" + phoneNumber + "</msisdn >";
-		String message = "<message>" + "Your order of " + lineItem.getAmount() + lineItem.getProduct().getName() + " is ready for pickup from " + store.getName() + "\nSincerely Carols Boutique</message >";
+		String number = "<msisdn>" + ibt.getCustomerPhone() + "</msisdn >";
+		String message = "<message>" + "Your order of " + ibt.getAmount() + getProductName(ibt.getProductID()) + " is ready for pickup from our " + getStoreName(ibt.getStoreID()) + " branch\nSincerely Carols Boutique</message >";
 		String foot = "</smsreq>";
 
 		String stuff = head + dateTime + user + pass + number + message + foot;

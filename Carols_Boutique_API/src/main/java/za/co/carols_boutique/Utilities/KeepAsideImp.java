@@ -101,17 +101,16 @@ public class KeepAsideImp extends Thread {
 	public boolean createKeepAside(String productID, Integer amount) {//Change Email
 //		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getLineItem());
 		rowsAffected = 0;
-		keepAside.setId(IDGenerator.generateID("KA"));
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("insert into keepaside(id, storeID, date, customerEmail , product, amount, time) values(?, ?, ?, ?, ?, ?, ?)");
 				ps.setString(1, keepAside.getId());
 				ps.setString(2, keepAside.getStoreID());
-				ps.setDate(3, (Date) keepAside.getDate());
+				ps.setDate(3, (Date) new Date(System.currentTimeMillis()));
 				ps.setString(4, keepAside.getCustomerEmail());
 				ps.setString(5, keepAside.getProductID());
 				ps.setInt(6, keepAside.getAmount());
-				ps.setTime(7, keepAside.getTime());
+				ps.setTime(7, new Time(System.currentTimeMillis()));
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();

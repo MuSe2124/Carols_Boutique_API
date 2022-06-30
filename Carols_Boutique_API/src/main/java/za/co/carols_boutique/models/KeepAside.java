@@ -32,9 +32,8 @@ public class KeepAside implements Serializable {
 		this.time = time;
 	}
 
-	public KeepAside(String storeID, Date date, String customerEmail, String productID, Integer amount) {
+	public KeepAside(String storeID, String customerEmail, String productID, Integer amount) {
 		this.storeID = storeID;
-		this.date = date;
 		this.customerEmail = customerEmail;
 		this.productID = productID;
 		this.amount = amount;
