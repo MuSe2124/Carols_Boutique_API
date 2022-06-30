@@ -8,7 +8,7 @@ import za.co.carols_boutique.ReportBE.ServiceReport.RepServiceImp;
 
 public class Report implements Serializable {
 
-	private RepService service;
+//	private RepService service;
 	private List<StoreSale> storeSales;
 	private List<EmpSale> empSales;
 	private List<ProdStore> prodStores;
@@ -18,7 +18,7 @@ public class Report implements Serializable {
 	private List<Review> reviews;
 
 	public Report() {
-		service = new RepServiceImp();
+//		service = new RepServiceImp();
 		reviews = new ArrayList<Review>();
 		storeSales = new ArrayList<>();
 		empSales = new ArrayList<>();
@@ -81,13 +81,13 @@ public class Report implements Serializable {
 		this.prodStores = prodStores;
 	}
 
-	public RepService getService() {
-		return service;
-	}
-
-	public void setService(RepService service) {
-		this.service = service;
-	}
+//	public RepService getService() {
+//		return service;
+//	}
+//
+//	public void setService(RepService service) {
+//		this.service = service;
+//	}
 
 	public List<SaleReport> getSaleReports() {
 		return saleReports;
@@ -99,7 +99,7 @@ public class Report implements Serializable {
 
 	@Override
 	public String toString() {
-		String s = "Report{" + "\nservice=" + service + "\nreviews=" + reviews.size() + "\nstoreSales=" + storeSales.size() + "\nempSales=" + empSales.size() + "\nprodStores=" + prodStores.size() + "\nsales=" + sales.size() + "\nsaleReports=" + saleReports.size() + "\n";
+		String s = "Report{" + "\nservice=" + "\nreviews=" + reviews.size() + "\nstoreSales=" + storeSales.size() + "\nempSales=" + empSales.size() + "\nprodStores=" + prodStores.size() + "\nsales=" + sales.size() + "\nsaleReports=" + saleReports.size() + "\n";
 		if (productReport != null) {
 			s += "\nproductReport= " + productReport.toString();
 		}

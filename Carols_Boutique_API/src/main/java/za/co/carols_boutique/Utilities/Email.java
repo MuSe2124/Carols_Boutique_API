@@ -454,7 +454,7 @@ public class Email extends Thread {
 				+ "</table>\n"
 				+ "<h4><u><b>Return policy</b></u></h4>\n"
 				+ "<h5>You can return any product within 10 days of purchase.</h5>\n"
-				+ "<h6><u>Please rate our service:?Link?</u></h6>\n"
+				+ "<h6><u>Please rate our service:<a href=\"http://localhost:8080/Carols_POS/ReviewStore.jsp \"></u></h6>\n"
 				+ "</body>\n"
 				+ "</html>";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
@@ -582,7 +582,7 @@ public class Email extends Thread {
 				+ "</table>\n"
 				+ "<h4><u><b>Return policy</b></u></h4>\n"
 				+ "<h5>You can return any product within 10 days of purchase.</h5>\n"
-				+ "<h6 Style = \"font-size:15px\"><u>Please rate our service:??link??</u></h6>\n"
+				+ "<h6 Style = \"font-size:15px\"><u>Please rate our service:<a href=\"http://localhost:8080/Carols_POS/ReviewStore.jsp \"></u></h6>\n"
 				+ "</body>\n"
 				+ "</html>";
 		SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
