@@ -11,6 +11,7 @@ import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.models.KeepAside;
+import za.co.carols_boutique.Utilities.Email;
 
 public class KeepAsideImp extends Thread {
 
@@ -42,12 +43,13 @@ public class KeepAsideImp extends Thread {
 
 	@Override
 	public void run() {
+		System.out.println("Check 1");
 		createKeepAside(keepAside.getProductID(), keepAside.getAmount());
-		System.out.println("Start");
 		try {
 //			KeepAsideImp.sleep(86400000); //24 hours in milliseconds
-			KeepAsideImp.sleep(3000); //24 hours in milliseconds
-			System.out.println("Checkpoint 1");
+			KeepAsideImp.sleep(6000); //24 hours in milliseconds
+			System.out.println("Check 2");
+
 		} catch (InterruptedException ex) {
 			Logger.getLogger(KeepAsideImp.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -56,31 +58,32 @@ public class KeepAsideImp extends Thread {
 		}
 		try {
 //			KeepAsideImp.sleep(43200000); //12 hours in milliseconds
-			KeepAsideImp.sleep(3000); //12 hours in milliseconds
-			System.out.println("Checkpoint 2");
+			KeepAsideImp.sleep(6000); //12 hours in milliseconds
+			System.out.println("Check 3");
+
 		} catch (InterruptedException ex) {
 			Logger.getLogger(KeepAsideImp.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		if (getKeepAside(keepAside.getId()) != null) {
 			removeItem(keepAside.getId());
-			System.out.println("Checkpoint 3");
 		}
-		System.out.println("Its been a minute");
+		System.out.println("Check 4");
+
 	}
 
 	public boolean sendReminder24h(KeepAside keepAside) {
-//		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
 		return true;
 	}
 
 	public boolean sendReminder36h(KeepAside keepAside) {
-//		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
 		return true;
 
 	}
 
 	public boolean removeItem(String keepAsideID) {
-//		new Email("send48hReminder", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("send48hReminder", keepAside.getCustomerEmail());
 		keepAside.setId(IDGenerator.generateID("KAA"));
 		rowsAffected = 0;
 		if (con != null) {
@@ -97,9 +100,14 @@ public class KeepAsideImp extends Thread {
 		}
 		return rowsAffected == 2;
 	}
+	
+	public static void main(String[] args) {
+		KeepAside keepAside = new KeepAside("str1", "mustafaaosman339@gmail.com", "pro1", 2);
+		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
+	}
 
 	public boolean createKeepAside(String productID, Integer amount) {//Change Email
-//		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
 		rowsAffected = 0;
 		if (con != null) {
 			try {

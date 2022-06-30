@@ -83,10 +83,10 @@ public class DAOStoreImp implements DAOStore {
 			}
 		}
 		ArrayList<Stock> lowStock = new DAOProductImp().getLowStock(storeID);
-//		if (lowStock.size() > 0) {
-//			System.out.println("Sending email");
+		if (lowStock.size() > 0) {
+			System.out.println("Sending email");
 			new Email("lowStockReminder", getManagerEmail(storeID), lowStock);
-//		}
+		}
 		return store;
 	}
 
@@ -111,7 +111,7 @@ public class DAOStoreImp implements DAOStore {
 //		System.out.println(new DAOStoreImp().getStore("str1", "pass").toString());
 //		System.out.println(new DAOProductImp().getLowStock("str1").size());
 //		new Email("test", "mustafaaosman339@gmail.com");
-		
+
 	}
 
 	private boolean insertLineItems(Sale sale) {

@@ -10,7 +10,7 @@ public class TestPhone {
 
 	public static void main(String[] args) {
 		String head = "<smsreq>";
-		String dateTime = "<datetime>2022/06/29,14:38:00</datetime>";
+		String dateTime = "<datetime>2022/06/30,11:54:00</datetime>";
 		String user = " <user>GROUP1</user>";
 		String pass = "<pass>group1</pass>";
 		String number = "<msisdn>0609111848</msisdn>";

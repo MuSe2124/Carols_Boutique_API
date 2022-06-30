@@ -28,6 +28,9 @@ public class IBT implements Serializable {
 		this.storeID = storeID;
 	}
 
+	public IBT() {
+	}
+
 	public String getId() {
 		return id;
 	}
