@@ -32,15 +32,15 @@ public class RestEndpointReport {
     @GET
     @Path("/getCustomerReviews/{month}/{amount}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getCustomerReviews(@PathParam("month")String month,@PathParam("amount")String amount){
-        return Response.status(Response.Status.OK).entity(service.getCustomerReviews(month,Integer.parseInt(amount))).build();
+    public Report getCustomerReviews(@PathParam("month")String month,@PathParam("amount")String amount){
+        return service.getCustomerReviews(month,Integer.parseInt(amount));
     }
     
     @GET
     @Path("/viewMonthlySales/{storeID}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewMonthlySales(@PathParam("storeID")String storeID, @PathParam("month")String month){
-        return Response.status(Response.Status.OK).entity(service.viewMonthlySales(storeID,month)).build();
+    public Report viewMonthlySales(@PathParam("storeID")String storeID, @PathParam("month")String month){
+        return service.viewMonthlySales(storeID,month);
     }
     
     @GET
@@ -53,38 +53,38 @@ public class RestEndpointReport {
     @GET
     @Path("/viewStoresThatAchievedTarget/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewStoresThatAchievedTarget(@PathParam("month")String month){
-        return Response.status(Response.Status.OK).entity(service.viewStoresThatAchievedTarget(month)).build();
+    public Report viewStoresThatAchievedTarget(@PathParam("month")String month){
+        return service.viewStoresThatAchievedTarget(month);
     }
     
     @GET
     @Path("/viewTopSellingProducts/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewTopSellingProducts(@PathParam("month")String month){
-        return Response.status(Response.Status.OK).entity(service.viewTopSellingProducts(month)).build();
+    public Report viewTopSellingProducts(@PathParam("month")String month){
+        return service.viewTopSellingProducts(month);
     }
     
     @GET
     @Path("/viewLeastPerformingStores/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewLeastPerformingStores(@PathParam("month")String month){
-        Response response = null;  
-            response = Response.status(Response.Status.OK).entity(service.viewLeastPerformingStores(month)).build();
-        return response;
+    public Report viewLeastPerformingStores(@PathParam("month")String month){
+          
+        return service.viewLeastPerformingStores(month);
+         
     }
     
     @GET
     @Path("/viewProductReport/{productID}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewProductReport(@PathParam("productID")String productID, @PathParam("month")String month){
-        return Response.status(Response.Status.OK).entity(service.viewProductReport(productID,month)).build();
+    public Report viewProductReport(@PathParam("productID")String productID, @PathParam("month")String month){
+        return service.viewProductReport(productID,month);
     }
     
     @GET
     @Path("/viewDailySalesReport/{storeID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewSalesReport(@PathParam("storeID")String storeID){
-        return Response.status(Response.Status.OK).entity(service.viewDailySalesReport(storeID)).build();
+    public Report viewSalesReport(@PathParam("storeID")String storeID){
+        return service.viewDailySalesReport(storeID);
     }
     
     @POST
@@ -108,7 +108,7 @@ public class RestEndpointReport {
 	@Produces(MediaType.APPLICATION_JSON)
 	public Employee viewProductReport() {
 		Date date = new Date(System.currentTimeMillis());
-		Email email = new Email("newsLetterPromotion", "jomarvn@gmail.com", "Johannes", date);
+		Email email = new Email("newsLetterPromotion", "mustafaaosman339@gmail.com", "Johannes", date);
 		return new Employee();
 	}
 

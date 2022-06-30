@@ -64,14 +64,14 @@ public class DaoEmpImp implements DAOEmp {
 		Employee emp = null;
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("select id,name,surname,isManager,password from Employee where id = ? and password =? and StoreID=?");
+				ps = con.prepareStatement("select id,name,surname,storeID,isManager,password from Employee where id = ? and password =? and StoreID=?");
 
 				ps.setString(1, employeeID);
 				ps.setString(2, password);
 				ps.setString(3, StoreID);
 				rs = ps.executeQuery();
 				while (rs.next()) {
-				emp = new Employee(rs.getString("id"), rs.getString("name"), rs.getString("surname"), rs.getString("password"), rs.getBoolean("isManager"));
+				emp = new Employee(rs.getString("id"), rs.getString("name"), rs.getString("surname"), rs.getString("password"), rs.getString("storeID"), rs.getBoolean("isManager"));
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();

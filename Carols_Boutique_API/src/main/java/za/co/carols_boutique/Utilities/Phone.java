@@ -22,10 +22,6 @@ public class Phone {
 		this.store = store;
 	}
 
-	public static void main(String[] args) {
-		new Phone(new LineItem(new Product("pro6", "This is a prodcut"), 1), "0748035093", new Store("This is a store name", "Location", "Pass")).run();
-	}
-
 	public void run() {
 		String head = "<smsreq>";
 		String dateTime = "<datetime>2022/05/20,10:10:00< / datetime >";

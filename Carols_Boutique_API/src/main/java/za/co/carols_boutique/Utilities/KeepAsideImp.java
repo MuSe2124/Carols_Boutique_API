@@ -1,6 +1,5 @@
 package za.co.carols_boutique.Utilities;
 
-
 import java.sql.Connection;
 import java.sql.Date;
 import java.sql.DriverManager;
@@ -11,15 +10,10 @@ import java.sql.Time;
 import java.time.LocalTime;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import za.co.carols_boutique.Utilities.Email;
 import za.co.carols_boutique.models.KeepAside;
-import za.co.carols_boutique.models.LineItem;
-import za.co.carols_boutique.models.Product;
+import za.co.carols_boutique.Utilities.Email;
 
-public class KeepAsideImp extends Thread implements KeepAsideInt {
-	public static void main(String[] args) {
-		new KeepAsideImp(new KeepAside(IDGenerator.generateID("KA"), "str1", new java.util.Date(System.currentTimeMillis()), "mustafaaOsman339@gmail.com", new LineItem("li3", IDGenerator.generateID("sa"), new Product("pro6", "Produvt", "Description", 500F, "M"), 1, "M"), new Time(System.currentTimeMillis())));
-	}
+public class KeepAsideImp extends Thread {
 
 	private Time time;
 	private KeepAside keepAside;
@@ -32,7 +26,7 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 	public KeepAsideImp(KeepAside keepAside) {
 
 		time = Time.valueOf(LocalTime.MIN);
-
+		this.keepAside = keepAside;
 		try {
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -44,17 +38,18 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
-		start();
+		this.start();
 	}
 
 	@Override
 	public void run() {
-		addItem(keepAside.getLineItem());
-		System.out.println("Beofre 1sr");
+		System.out.println("Check 1");
+		createKeepAside(keepAside.getProductID(), keepAside.getAmount());
 		try {
 //			KeepAsideImp.sleep(86400000); //24 hours in milliseconds
-			KeepAsideImp.sleep(3000); //24 hours in milliseconds
-			System.out.println("After 1st");
+			KeepAsideImp.sleep(6000); //24 hours in milliseconds
+			System.out.println("Check 2");
+
 		} catch (InterruptedException ex) {
 			Logger.getLogger(KeepAsideImp.class.getName()).log(Level.SEVERE, null, ex);
 		}
@@ -63,68 +58,67 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 		}
 		try {
 //			KeepAsideImp.sleep(43200000); //12 hours in milliseconds
-			KeepAsideImp.sleep(3000); //12 hours in milliseconds
-			System.out.println("After 2nd");
+			KeepAsideImp.sleep(6000); //12 hours in milliseconds
+			System.out.println("Check 3");
+
 		} catch (InterruptedException ex) {
 			Logger.getLogger(KeepAsideImp.class.getName()).log(Level.SEVERE, null, ex);
 		}
 		if (getKeepAside(keepAside.getId()) != null) {
-			removeItem(keepAside.getLineItem());
+			removeItem(keepAside.getId());
 		}
+		System.out.println("Check 4");
+
 	}
 
-	@Override
 	public boolean sendReminder24h(KeepAside keepAside) {
-		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
 		return true;
 	}
 
-	@Override
 	public boolean sendReminder36h(KeepAside keepAside) {
-		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getLineItem());
+		new Email("send24hReminder", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
 		return true;
 
 	}
 
-	@Override
-	public boolean removeItem(LineItem lineItem) {
-		Product prod = lineItem.getProduct();
-		new Email("send48hReminder", keepAside.getCustomerEmail(), keepAside.getLineItem());
-
+	public boolean removeItem(String keepAsideID) {
+		new Email("send48hReminder", keepAside.getCustomerEmail());
+		keepAside.setId(IDGenerator.generateID("KAA"));
 		rowsAffected = 0;
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("insert into keepasidearchive(id, storeID, date, customeremail, lineitem, time) select id, storeID, date, customeremail, lineitem, time from keepaside where keepaside.id = ?");
-				ps.setString(1, keepAside.getId());
-				ps.setString(2, keepAside.getStoreID());
-				ps.setDate(3, (Date) keepAside.getDate());
-				ps.setString(4, keepAside.getCustomerEmail());
-				ps.setString(5, keepAside.getLineItem().getId());
-				ps.setTime(6, new Time(System.currentTimeMillis()));
+				ps = con.prepareStatement("insert into keepasidearchive(id, storeID, date, customerEmail , product, amount, time) select id, storeID, date, customerEmail , product, amount, time from keepaside where keepaside.id = ?");
+				ps.setString(1, keepAsideID);
 				rowsAffected = ps.executeUpdate();
+				ps = con.prepareStatement("delete from keepAside where id = ?");
+				ps.setString(1, keepAsideID);
+				rowsAffected += ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return rowsAffected == 1;
+		return rowsAffected == 2;
+	}
+	
+	public static void main(String[] args) {
+		KeepAside keepAside = new KeepAside("str1", "mustafaaosman339@gmail.com", "pro1", 2);
+		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
 	}
 
-	@Override  //Switch name
-	public boolean addItem(LineItem lineItem) {
-		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getLineItem());
-		Product prod = lineItem.getProduct();
+	public boolean createKeepAside(String productID, Integer amount) {//Change Email
+		new Email("keepAsideCreated", keepAside.getCustomerEmail(), keepAside.getProductID(), keepAside.getAmount());
 		rowsAffected = 0;
 		if (con != null) {
 			try {
-
-				//con.setAutoCommit(false);
-				ps = con.prepareStatement("insert into keepaside(id, storeID, date, customerEmail , product, time) values(?,?,?,?,?,?)");
+				ps = con.prepareStatement("insert into keepaside(id, storeID, date, customerEmail , product, amount, time) values(?, ?, ?, ?, ?, ?, ?)");
 				ps.setString(1, keepAside.getId());
 				ps.setString(2, keepAside.getStoreID());
-				ps.setDate(3, (Date) keepAside.getDate());
+				ps.setDate(3, (Date) new Date(System.currentTimeMillis()));
 				ps.setString(4, keepAside.getCustomerEmail());
-				ps.setString(5, keepAside.getLineItem().getId());
-				ps.setTime(6, keepAside.getTime());
+				ps.setString(5, keepAside.getProductID());
+				ps.setInt(6, keepAside.getAmount());
+				ps.setTime(7, new Time(System.currentTimeMillis()));
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -141,11 +135,15 @@ public class KeepAsideImp extends Thread implements KeepAsideInt {
 				ps.setString(1, id);
 				rs = ps.executeQuery();
 				while (rs.next()) {
-					keepAsides = new KeepAside(rs.getString("id"),
-							rs.getString("StoreId"),
-							rs.getDate("date"),
+					keepAsides = new KeepAside(
+							rs.getString("id"),
+							rs.getString("StoreID"),
+							rs.getDate("Date"),
 							rs.getString("customerEmail"),
-							rs.getTime("Time"));
+							rs.getString("product"),
+							rs.getInt("amount"),
+							rs.getTime("time")
+					);
 				}
 			} catch (SQLException e) {
 				e.printStackTrace();
