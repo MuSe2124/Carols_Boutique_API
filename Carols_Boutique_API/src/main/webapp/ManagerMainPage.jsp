@@ -11,85 +11,85 @@
         <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
         <title>Manager main page</title>
         <style>
-        .sideside{
-        background-color:rgb(0,0,50);
-        width:100px;
-        height:100%;
-        position:fixed;
-        top:0px;
-        left: 120px;
-        text-align:left;
-        }
-        .b{
-        border:none;
-        background-color:rgb(0,0,50);
-        color:white;
-        transition-duration: all 0.1s;
-        height:80px;
-        width:100%;
-        cursor: pointer;
-        }
-        #copyright{
-        Position:absolute;
-        top:800px;
-        left:640px;
-        }
-        #heading{
-        position:absolute;
-        left:600px;
-        }
-        .c{
-          background-color: rgb(0, 0, 128);
-          border: none;
-          color: white;
+			.sideside{
+				background-color:rgb(0,0,50);
+				width:100px;
+				height:100%;
+				position:fixed;
+				top:0px;
+				left: 120px;
+				text-align:left;
+			}
+			.b{
+				border:none;
+				background-color:rgb(0,0,50);
+				color:white;
+				transition-duration: all 0.1s;
+				height:80px;
+				width:100%;
+				cursor: pointer;
+			}
+			#copyright{
+				Position:absolute;
+				top:800px;
+				left:640px;
+			}
+			#heading{
+				position:absolute;
+				left:600px;
+			}
+			.c{
+				background-color: rgb(0, 0, 128);
+				border: none;
+				color: white;
 
-          text-align: left;
-          text-decoration: none;
+				text-align: left;
+				text-decoration: none;
 
-          font-size: 18px;
-          height:70px;
-          width:120px;
-          transition-duration: all 0.1s;
-          cursor: pointer;
-        }
-        #side {
-        align:right;
+				font-size: 18px;
+				height:70px;
+				width:120px;
+				transition-duration: all 0.1s;
+				cursor: pointer;
+			}
+			#side {
+				align:right;
 
-          height: 100%;
-          width: 120px;
-          position: fixed;
-          z-index: 1;
-          top: 0;
-          left: 0;
-          background-color: rgb(0, 0, 128);
-          overflow-x: hidden;
-          padding-top: 10px;
-        }
-        #mid{
-        background-color:white;
-        width:900px;
-        height:700px;
-        position:absolute;
-        top:80px;
-        left:280px;
-        border-style:double;
-        border-width:5px;
-        border-color:grey;
-        overflow: auto;
-        }
-        .b:hover {
-          background-color: rgb(0, 0, 90);
-        }
-        .b.active{
-          background-color:rgb(0,0,128);
-        }
-        .c:hover {
-          background-color: rgb(0, 0, 80);
-        }
+				height: 100%;
+				width: 120px;
+				position: fixed;
+				z-index: 1;
+				top: 0;
+				left: 0;
+				background-color: rgb(0, 0, 128);
+				overflow-x: hidden;
+				padding-top: 10px;
+			}
+			#mid{
+				background-color:white;
+				width:900px;
+				height:700px;
+				position:absolute;
+				top:80px;
+				left:280px;
+				border-style:double;
+				border-width:5px;
+				border-color:grey;
+				overflow: auto;
+			}
+			.b:hover {
+				background-color: rgb(0, 0, 90);
+			}
+			.b.active{
+				background-color:rgb(0,0,128);
+			}
+			.c:hover {
+				background-color: rgb(0, 0, 80);
+			}
 
-        .c.active{
-          background-color:rgb(0,0,50);
-        }
+			.c.active{
+				background-color:rgb(0,0,50);
+			}
 
         </style>
     </head>
@@ -134,7 +134,7 @@
             <button id ="requestibt" class="b" name ="button" value ="Request IBT">Request IBT</button>
             <button id ="ibtrequestpage" class="b" name ="button" value ="IBT Requests page">IBT Requests</button>
         </div>
-        
+
         <label id="copyright">Carols Boutique pty.Ltd.<br>Reg.131 482 9132</label>
         <div class ="mid" id ="ckapage">
             <h2 style ="font-size:30px;">Create keep aside</h2>
@@ -155,37 +155,37 @@
                     <button id="createkeepaside" class ="mb" name="button" value ="create keep aside">create keep aside</button>
                     <button id="clear" class="mb">clear</button>
                     </div>
-        <script>
-        function openCity(evt, cityName) {
-          var i, tabcontent, tablinks;
-                tabcontent = document.getElementsByClassName("sideside");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-                tablinks = document.getElementsByClassName("c");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " active";
-            }
+					<script>
+						function openCity(evt, cityName) {
+							var i, tabcontent, tablinks;
+							tabcontent = document.getElementsByClassName("sideside");
+							for (i = 0; i < tabcontent.length; i++) {
+								tabcontent[i].style.display = "none";
+							}
+							tablinks = document.getElementsByClassName("c");
+							for (i = 0; i < tablinks.length; i++) {
+								tablinks[i].className = tablinks[i].className.replace(" active", "");
+							}
+							document.getElementById(cityName).style.display = "block";
+							evt.currentTarget.className += " active";
+						}
 
-            // Get the element with id="defaultOpen" and click on it
-            document.getElementById("viewreport").click();
-        function updatePage(evt,TabPage){
-            var i, tabcontent, tablinks;
-                tabcontent = document.getElementsByClassName("sideside");
-                for (i = 0; i < tabcontent.length; i++) {
-                    tabcontent[i].style.display = "none";
-                }
-                tablinks = document.getElementsByClassName("c");
-                for (i = 0; i < tablinks.length; i++) {
-                    tablinks[i].className = tablinks[i].className.replace(" active", "");
-                }
-                document.getElementById(cityName).style.display = "block";
-                evt.currentTarget.className += " active";
-        }
-        
-        </script>
-    </body>
-</html>
+						// Get the element with id="defaultOpen" and click on it
+						document.getElementById("viewreport").click();
+						function updatePage(evt, TabPage) {
+							var i, tabcontent, tablinks;
+							tabcontent = document.getElementsByClassName("sideside");
+							for (i = 0; i < tabcontent.length; i++) {
+								tabcontent[i].style.display = "none";
+							}
+							tablinks = document.getElementsByClassName("c");
+							for (i = 0; i < tablinks.length; i++) {
+								tablinks[i].className = tablinks[i].className.replace(" active", "");
+							}
+							document.getElementById(cityName).style.display = "block";
+							evt.currentTarget.className += " active";
+						}
+
+					</script>
+					</body>
+					</html>

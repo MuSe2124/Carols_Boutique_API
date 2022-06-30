@@ -35,6 +35,8 @@ public class Email extends Thread {
 	LineItem postLineItem;
 	ArrayList<Stock> products;
 	String promocode;
+	String productID;
+	Integer amount;
 
 	public Email(String action, String recipient) {
 		this.action = action;
@@ -64,10 +66,11 @@ public class Email extends Thread {
 		this.start();
 	}
 
-	public Email(String action, String recipient, LineItem preLineItem) {
+	public Email(String action, String recipient, String productID, Integer amount) {
 		this.action = action;
 		this.recipient = recipient;
-		this.preLineItem = preLineItem;
+		this.productID = productID;
+		this.amount = amount;
 		this.start();
 	}
 
@@ -115,7 +118,7 @@ public class Email extends Thread {
 			} catch (MessagingException e) {
 				e.printStackTrace();
 			}
-			break; 
+			break;
 
 			case "sendReceipt"://Done
                 try {
@@ -150,7 +153,7 @@ public class Email extends Thread {
 			case "send24hReminder"://DOne
                 try {
 				setupServerProperties();
-				send24hReminder(recipient, preLineItem);
+				send24hReminder(recipient, productID, amount);
 				sendEmail();
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -160,7 +163,7 @@ public class Email extends Thread {
 			case "send36hReminder"://DOene
                 try {
 				setupServerProperties();
-				send36hReminder(recipient, preLineItem);
+				send36hReminder(recipient, productID, amount);
 				sendEmail();
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -180,7 +183,7 @@ public class Email extends Thread {
 			case "keepAsideCreated"://DOne
                 try {
 				setupServerProperties();
-				keepAsideCreated(recipient, preLineItem, code);
+				keepAsideCreated(recipient, productID, amount);
 				sendEmail();
 			} catch (MessagingException e) {
 				e.printStackTrace();
@@ -241,8 +244,8 @@ public class Email extends Thread {
 	}
 
 	public void sendEmail() throws MessagingException {
-		String fromUser = "jomarvn@gmail.com";
-		String userPassword = "J0hannes";
+		String fromUser = "carols.boutique.domain@gmail.com";
+		String userPassword = "qfdqfmqeznacwbzl";
 		String emailHost = "smtp.gmail.com";
 		Transport transport = newSession.getTransport("smtp");
 		transport.connect(emailHost, fromUser, userPassword);
@@ -300,23 +303,23 @@ public class Email extends Thread {
 		return mimeMessage;
 	}
 
-	public MimeMessage send24hReminder(String recipient, LineItem lineItem) throws MessagingException {
+	public MimeMessage send24hReminder(String recipient, String productID, Integer amount) throws MessagingException {
 
 		mimeMessage = new MimeMessage(newSession);
 		mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
-		String body = reminder24hString(lineItem);
+		String body = reminder24hString(productID, amount);
 		mimeMessage.setSubject("Carol's Boutique receipt");
 		mimeMessage.setContent(body, "text/html");
 		return mimeMessage;
 	}
 
-	public MimeMessage send36hReminder(String recipient, LineItem lineItem) throws MessagingException {
+	public MimeMessage send36hReminder(String recipient, String productID, Integer amount) throws MessagingException {
 
 		mimeMessage = new MimeMessage(newSession);
 		mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
 
-		String body = reminder36hString(lineItem);
+		String body = reminder36hString(productID, amount);
 		mimeMessage.setSubject("Carol's Boutique receipt");
 		mimeMessage.setContent(body, "text/html");
 		return mimeMessage;
@@ -333,11 +336,11 @@ public class Email extends Thread {
 		return mimeMessage;
 	}
 
-	public MimeMessage keepAsideCreated(String recipient, LineItem lineItem, String code) throws MessagingException {
+	public MimeMessage keepAsideCreated(String recipient, String productID, Integer amount) throws MessagingException {
 
 		mimeMessage = new MimeMessage(newSession);
 		mimeMessage.addRecipient(Message.RecipientType.TO, new InternetAddress(recipient));
-		String body = keepAside(lineItem, code);
+		String body = keepAside(productID, amount);
 		mimeMessage.setSubject("Carol's Boutique receipt");
 		mimeMessage.setContent(body, "text/html");
 		return mimeMessage;
@@ -655,7 +658,7 @@ public class Email extends Thread {
 		return s;
 	}
 
-	private String reminder24hString(LineItem lineItem) {
+	private String reminder24hString(String productID, Integer amount) {
 		String s = "<!DOCTYPE html>\n"
 				+ "<html>\n"
 				+ "<head>\n"
@@ -668,12 +671,12 @@ public class Email extends Thread {
 				+ "\n"
 				+ "</body>\n"
 				+ "</html>";
-		s = s.replace("??amount??", "" + lineItem.getAmount());
-		s = s.replace("??product??", lineItem.getProduct().getName());
+		s = s.replace("??amount??", "" + amount);
+		s = s.replace("??product??", productID);
 		return s;
 	}
 
-	private String reminder36hString(LineItem lineItem) {
+	private String reminder36hString(String productID, Integer amount) {
 		String s = "<!DOCTYPE html>\n"
 				+ "<html>\n"
 				+ "<head>\n"
@@ -686,8 +689,8 @@ public class Email extends Thread {
 				+ "\n"
 				+ "</body>\n"
 				+ "</html>";
-		s = s.replace("??amount??", "" + lineItem.getAmount());
-		s = s.replace("??product??", lineItem.getProduct().getName());
+		s = s.replace("??amount??", "" + amount);
+		s = s.replace("??product??", productID);
 		return s;
 	}
 
@@ -704,7 +707,7 @@ public class Email extends Thread {
 				+ "</html>";
 	}
 
-	private String keepAside(LineItem lineItem, String code) {
+	private String keepAside(String productID, Integer amount) {
 		String s = "<html>\n"
 				+ "<head>\n"
 				+ "<title>Page Title</title>\n"
@@ -722,8 +725,8 @@ public class Email extends Thread {
 				+ "</body>\n"
 				+ "</html>";
 		s = s.replace("??ID??", code);
-		s = s.replace("??Number??", "" + lineItem.getAmount());
-		s = s.replace("??Product??", lineItem.getProduct().getName());
+		s = s.replace("??Number??", "" + amount);
+		s = s.replace("??Product??", productID);
 		return s;
 	}
 

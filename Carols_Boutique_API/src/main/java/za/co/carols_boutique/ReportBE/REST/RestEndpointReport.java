@@ -103,12 +103,13 @@ public class RestEndpointReport {
         return Response.status(Response.Status.OK).entity(service.addCustomer(customer)).build();
     }
 
-//	@GET
-//	@Path("/testing")
-//	@Produces(MediaType.APPLICATION_JSON)
-//	public Employee viewProductReport() {
-//		Date date = new Date(System.currentTimeMillis());
-//		Email email = new Email("newsLetterPromotion", "jomarvn@gmail.com", "Johannes", date);
-//		return new Employee();
-//	}
+	@GET
+	@Path("/testing")
+	@Produces(MediaType.APPLICATION_JSON)
+	public Employee viewProductReport() {
+		Date date = new Date(System.currentTimeMillis());
+		Email email = new Email("newsLetterPromotion", "mustafaaosman339@gmail.com", "Johannes", date);
+		return new Employee();
+	}
+
 }
