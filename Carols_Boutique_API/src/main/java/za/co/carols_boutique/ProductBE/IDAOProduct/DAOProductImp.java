@@ -150,6 +150,7 @@ public class DAOProductImp implements DAOProduct {
 	@Override
 	public Boolean addNewProduct(Product product, String catID) {
 		rowsAffected = 0;
+		product.setId(IDGenerator.generateID("pro"));
 		if (addCatToProd(catID, product.getId())) {
 			if (con != null) {
 				try {
