@@ -40,16 +40,14 @@ public class RestEndpointReport {
     @Path("/viewMonthlySales/{storeID}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
     public Response viewMonthlySales(@PathParam("storeID")String storeID, @PathParam("month")String month){
-		System.out.println(month);
-		System.out.println(storeID);
         return Response.status(Response.Status.OK).entity(service.viewMonthlySales(storeID,month)).build();
     }
     
     @GET
     @Path("/viewTopSellingEmployees/{storeID}/{month}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response viewTopSellingEmployees(@PathParam("storeID")String storeID, @PathParam("month")String month){
-        return Response.status(Response.Status.OK).entity(service.viewTopSellingEmployees(storeID,month)).build();
+    public Report viewTopSellingEmployees(@PathParam("storeID")String storeID, @PathParam("month")String month){
+        return service.viewTopSellingEmployees(storeID,month);
     }
     
     @GET
