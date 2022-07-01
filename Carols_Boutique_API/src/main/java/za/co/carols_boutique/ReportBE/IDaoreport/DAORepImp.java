@@ -281,6 +281,7 @@ public class DAORepImp implements DAORep {
 	@Override
 	public Report viewStoresThatAchievedTarget(String month) {
 		Report report = new Report();
+		report.setStoreSales(new ArrayList<>());
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("select id from store");
