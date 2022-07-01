@@ -23,16 +23,13 @@ import za.co.carols_boutique.models.Store;
 
 public class IBTImp {
 
-	private IBT ibt;
-
 	private Connection con;
 	private ResultSet rs;
 	private PreparedStatement ps;
 	private int rowsAffected;
 
-	public IBTImp(IBT ibt) {
+	public IBTImp() {
 
-		this.ibt = ibt;
 
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.jdbc.Driver");
@@ -64,7 +61,7 @@ public class IBTImp {
 		return name;
 	}
 
-	public boolean createIBT() {
+	public boolean createIBT(IBT ibt) {
 		ibt.setId(IDGenerator.generateID("IBT"));
 		if (con != null) {
 			try {
@@ -79,20 +76,15 @@ public class IBTImp {
 				e.printStackTrace();
 			}
 		}
-		try {
-			Thread.sleep(7200000);
-			message(ibt);
-		} catch (InterruptedException ex) {
-			Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
-		}
+		message(ibt);
 		return rowsAffected == 1;
 	}
+	
+	public boolean acceptIBT(String ibtID) {
+		return true;
+	}
 
-//	public boolean sendCustomerMessage() {
-//		Phone phone = new Phone(lineItem, customer.getPhoneNumber(), store);
-//		return phone != null;
-//	}
-	//insert into keepasidearchive(id, storeID, date, customeremail, lineitem, time) select id, storeID, date, customeremail, lineitem, time from keepaside where keepaside.id = ?
+	
 	public boolean removeIBT(String ibtId) {
 		if (con != null) {
 			try {
@@ -132,14 +124,31 @@ public class IBTImp {
 		String user = " <user>GROUP1</user>";
 		String pass = "<pass>group1</pass>";
 		String number = "<msisdn>" + ibt.getCustomerPhone() + "</msisdn>";
-		String message = "<message>" + "Your order of " + ibt.getAmount() + getProductName(ibt.getProductID()) + " is ready for pickup from our " + getStoreName(ibt.getStoreID()) + " branch\nSincerely Carols Boutique</message>";
+		String message = "<message>" + "Your order of " + ibt.getAmount() + getProductName(ibt.getProductID()) + " will be ready for pickup from our " + getStoreName(ibt.getStoreID()) + " branch in 2 hours.\nSincerely Carols Boutique</message>";
 		String foot = "</smsreq>";
 
-		String stuff = head + dateTime + user + pass + number + message + foot;
+		String sms = head + dateTime + user + pass + number + message + foot;
 
 		String url = "http://196.41.180.157:8080/sms/sms_request";
 		Client client = ClientBuilder.newClient();
 		WebTarget webTarget = client.target(url);
-		Response response = webTarget.request(MediaType.APPLICATION_XML).post(Entity.xml(stuff));
+		Response response = webTarget.request(MediaType.APPLICATION_XML).post(Entity.xml(sms));
+	}
+	
+	public IBT getIBT(String ibtID) {
+		IBT ibt = null;
+		if(con != null) {
+			try {
+				ps = con.prepareStatement("select product, amount, customerPhone, size, store from ibt where id = ?");
+				ps.setString(1, ibtID);
+				rs = ps.executeQuery();
+				if(rs.next()) {
+					ibt = new IBT(ibtID, rs.getString("product"), rs.getInt("amount"), rs.getString("customerPhone"), rs.getString("size"), rs.getString("store"));
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return ibt;
 	}
 }
