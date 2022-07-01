@@ -1,8 +1,14 @@
 package za.co.carols_boutique.models;
 
 import java.io.Serializable;
+import java.time.LocalDate;
+import static java.time.LocalDate.now;
+import java.time.LocalDateTime;
+import java.time.format.DateTimeFormatter;
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import za.co.carols_boutique.models.Employee;
 
 public class Sale implements Serializable {
 
@@ -11,11 +17,11 @@ public class Sale implements Serializable {
 	private Employee employee;
 	private List<LineItem> lineItems;
 	private String customerEmail;
-	private Date date;
+	private LocalDate date;
 	private Payment payment;
 	private String promo;
 
-	public Sale(String id, Store store, Employee employee, List<LineItem> lineItems, String customerEmail, Date date, Payment payment, String promo) {
+	public Sale(String id, Store store, Employee employee, List<LineItem> lineItems, String customerEmail, LocalDate date, Payment payment, String promo) {
 		this.id = id;
 		this.store = store;
 		this.employee = employee;
@@ -26,19 +32,19 @@ public class Sale implements Serializable {
 		this.promo = promo;
 	}
 
-	public Sale(Date date, Payment payment) {
+	public Sale(LocalDate date, Payment payment) {
 		this.date = date;
 		this.payment = payment;
 	}
 
-	public Sale(List<LineItem> lineItems, Date date, Payment payment) {
+	public Sale(List<LineItem> lineItems, LocalDate date, Payment payment) {
 
 		this.lineItems = lineItems;
 		this.date = date;
 		this.payment = payment;
 	}
 
-	public Sale(Store store, Employee employee, List<LineItem> lineItems, String customerID, Date date, String promo) {
+	public Sale(Store store, Employee employee, List<LineItem> lineItems, String customerID, LocalDate date, String promo) {
 		this.store = store;
 		this.employee = employee;
 		this.lineItems = lineItems;
@@ -46,6 +52,17 @@ public class Sale implements Serializable {
 		this.date = date;
 		this.promo = promo;
 
+	}
+
+	{
+		store = new Store("str2", "pass");
+		employee = new Employee("J", "P", "pass", "s", true);
+		lineItems = new ArrayList<>();
+		customerEmail = "muaadhseedat3@gmail.com";
+		DateTimeFormatter ds = DateTimeFormatter.ofPattern("yyyy:mm:dd");
+
+		date = LocalDate.parse(ds.format(now()));
+		promo = "PROMOPROMO";
 	}
 
 	public Sale(Store store, String id) {
@@ -72,11 +89,11 @@ public class Sale implements Serializable {
 		this.customerEmail = customerID;
 	}
 
-	public Date getDate() {
+	public LocalDate getDate() {
 		return date;
 	}
 
-	public void setDate(Date date) {
+	public void setDate(LocalDate date) {
 		this.date = date;
 	}
 

@@ -9,8 +9,10 @@ import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
 import za.co.carols_boutique.ProductBE.ServiceProduct.ProdService;
 import za.co.carols_boutique.ProductBE.ServiceProduct.ProdServiceImp;
+import za.co.carols_boutique.models.Category;
 import za.co.carols_boutique.models.ProdCat;
 import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Refund;
@@ -71,8 +73,8 @@ public class RestEndpointProduct {
 	@GET
 	@Path("/getCategories")
 	@Produces (MediaType.APPLICATION_JSON)
-	public Response getCategories(){
-		return Response.status(Response.Status.OK).entity(service.getCategories()).build();
+	public ArrayList<Category> getCategories(){
+		return service.getCategories();
 	}
 
 }
