@@ -20,8 +20,8 @@ public class RestEndpointEmployee {
 	@Path("/login")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response login(Employee employee) {
-		return Response.status(Response.Status.OK).entity(service.login(employee.getId(), employee.getPassword(), employee.getStoreID())).build();
+	public Employee login(Employee employee) {
+		return service.login(employee.getId(), employee.getPassword(), employee.getStoreID());
 	}
 
 	@POST
