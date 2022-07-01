@@ -12,6 +12,7 @@ import jakarta.ws.rs.core.Response;
 import za.co.carols_boutique.ProductBE.ServiceProduct.ProdService;
 import za.co.carols_boutique.ProductBE.ServiceProduct.ProdServiceImp;
 import za.co.carols_boutique.models.ProdCat;
+import za.co.carols_boutique.models.Product;
 import za.co.carols_boutique.models.Refund;
 import za.co.carols_boutique.models.Stock;
 
@@ -23,8 +24,8 @@ public class RestEndpointProduct {
     @GET
     @Path("/getProduct/{productID}/{sizeID}")
     @Produces(MediaType.APPLICATION_JSON)
-    public Response getProduct(@PathParam("productID")String productID, @PathParam("sizeID")String sizeID){
-        return Response.status(Response.Status.OK).entity(service.getProduct(productID, sizeID)).build();
+    public Product getProduct(@PathParam("productID")String productID, @PathParam("sizeID")String sizeID){
+        return service.getProduct(productID, sizeID);
     }
     
     @POST

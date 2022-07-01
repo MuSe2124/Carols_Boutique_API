@@ -22,8 +22,8 @@ public class RestEndpointStore {
 	@Path("/loginStore")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response login(Store store) {
-		return Response.status(Response.Status.OK).entity(service.loginStore(store.getId(), store.getPassword())).build();
+	public Store login(Store store) {
+		return service.loginStore(store.getId(), store.getPassword());
 	}
 
 	@POST
