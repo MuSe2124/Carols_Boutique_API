@@ -32,10 +32,20 @@ public class UtilitiesRest {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response createIBT(IBT ibt) {
-		IBTImp ibtImp = new IBTImp(ibt);
-		ibtImp.createIBT();
-		
-		return Response.status(Response.Status.OK).entity("IBT added succesfully. IBT ID is: " + ibt.getId()).build();
+		IBTImp ibtImp = new IBTImp();
+		ibtImp.createIBT(ibt);
 
+		return Response.status(Response.Status.OK).entity("IBT added succesfully. IBT ID is: " + ibt.getId()).build();
+	}
+
+	@POST
+	@Path("/acceptIBT")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response approveIBT(String ibtID) {
+		IBTImp ibtImp = new IBTImp();
+		IBT ibt = ibtImp.getIBT(ibtID);
+		
+		return Response.status(Response.Status.OK).entity("IBT accepted").build();
 	}
 }
