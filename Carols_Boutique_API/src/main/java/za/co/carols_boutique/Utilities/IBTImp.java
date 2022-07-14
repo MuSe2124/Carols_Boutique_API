@@ -6,20 +6,16 @@ import jakarta.ws.rs.client.Entity;
 import jakarta.ws.rs.client.WebTarget;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
-import za.co.carols_boutique.Utilities.IDGenerator;
 import java.sql.Connection;
 import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import za.co.carols_boutique.models.Customer;
-import za.co.carols_boutique.models.LineItem;
-import za.co.carols_boutique.Utilities.Phone;
 import za.co.carols_boutique.models.IBT;
-import za.co.carols_boutique.models.Product;
-import za.co.carols_boutique.models.Store;
+import za.co.carols_boutique.models.Store_Product;
 
 public class IBTImp {
 
@@ -29,8 +25,6 @@ public class IBTImp {
 	private int rowsAffected;
 
 	public IBTImp() {
-
-
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -61,6 +55,29 @@ public class IBTImp {
 		return name;
 	}
 
+	public ArrayList<Store_Product> getProdStores(String productID) {
+		ArrayList<Store_Product> storeProds = new ArrayList<>();
+		if (con != null) {
+			try {
+				ps = con.prepareStatement("select id, storeID, productID, amount, Size from store_product where productID = ?");
+				ps.setString(1, productID);
+				rs = ps.executeQuery();
+				while (rs.next()) {
+//					storeProds.add(
+//							new Store_Product(rs.getString("storeID"), 
+//									rs.getString("productID"),
+//									rs.getInt("amount"), 
+//									rs.getString("size"))
+//					);
+				}
+			} catch (SQLException ex) {
+				Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
+			}
+		}
+		return storeProds;
+	}
+
+
 	public boolean createIBT(IBT ibt) {
 		ibt.setId(IDGenerator.generateID("IBT"));
 		if (con != null) {
@@ -84,7 +101,7 @@ public class IBTImp {
 		return true;
 	}
 
-	
+
 	public boolean removeIBT(String ibtId) {
 		if (con != null) {
 			try {
@@ -134,15 +151,16 @@ public class IBTImp {
 		WebTarget webTarget = client.target(url);
 		Response response = webTarget.request(MediaType.APPLICATION_XML).post(Entity.xml(sms));
 	}
-	
+
 	public IBT getIBT(String ibtID) {
 		IBT ibt = null;
-		if(con != null) {
+		if (con != null) {
 			try {
 				ps = con.prepareStatement("select product, amount, customerPhone, size, store from ibt where id = ?");
 				ps.setString(1, ibtID);
 				rs = ps.executeQuery();
-				if(rs.next()) {
+				if (rs.next()) {
+
 					ibt = new IBT(ibtID, rs.getString("product"), rs.getInt("amount"), rs.getString("customerPhone"), rs.getString("size"), rs.getString("store"));
 				}
 			} catch (SQLException ex) {

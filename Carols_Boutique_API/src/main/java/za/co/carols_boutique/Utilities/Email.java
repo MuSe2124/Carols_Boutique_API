@@ -223,9 +223,9 @@ public class Email extends Thread {
 
 	public void setupServerProperties() {
 		String host = "smtp.gmail.com";
-		final String username = "carols.boutique.domain@gmail.com";
+		final String username = "Carol.Boutique.Domain@gmail.com";
 		//Enter your Gmail password
-		final String password = "qfdqfmqeznacwbzl";
+		final String password = "hchgizkxnpyskrgv";
 
 		Properties prop = new Properties();
 		prop.put("mail.smtp.auth", true);

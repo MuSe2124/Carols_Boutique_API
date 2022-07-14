@@ -10,6 +10,7 @@ import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
 import za.co.carols_boutique.StoreBE.ServiceStore.StoreService;
 import za.co.carols_boutique.StoreBE.ServiceStore.StoreServiceImp;
+import za.co.carols_boutique.Utilities.Email;
 import za.co.carols_boutique.models.Sale;
 import za.co.carols_boutique.models.Store;
 
@@ -39,7 +40,9 @@ public class RestEndpointStore {
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response addSale(Sale sale) {
+		new Email("sendReceipt",sale.getCustomerEmail(),sale);
 		return Response.status(Response.Status.OK).entity(service.addSale(sale)).build();
+	
 	}
 
 	@GET
