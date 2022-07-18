@@ -32,7 +32,6 @@ public class IBTImp {
 	private int rowsAffected;
 
 	public IBTImp() {
-
 		try {//com.mysql.cj.jdbc.Driver
 			Class.forName("com.mysql.jdbc.Driver");
 		} catch (ClassNotFoundException e) {
@@ -85,6 +84,7 @@ public class IBTImp {
 		return storeProds;
 	}
 
+
 	public boolean createIBT(IBT ibt) {
 		ibt.setId(IDGenerator.generateID("IBT"));
 		if (con != null) {
@@ -103,10 +103,11 @@ public class IBTImp {
 		message(ibt);
 		return rowsAffected == 1;
 	}
-
+	
 	public boolean acceptIBT(String ibtID) {
 		return true;
 	}
+
 
 	public boolean removeIBT(String ibtId) {
 		if (con != null) {
@@ -166,6 +167,7 @@ public class IBTImp {
 				ps.setString(1, ibtID);
 				rs = ps.executeQuery();
 				if (rs.next()) {
+
 					ibt = new IBT(ibtID, rs.getString("product"), rs.getInt("amount"), rs.getString("customerPhone"), rs.getString("size"), rs.getString("store"));
 				}
 			} catch (SQLException ex) {

@@ -7,6 +7,7 @@ import java.sql.DriverManager;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -168,7 +169,7 @@ public class DAOStoreImp implements DAOStore {
 				ps.setString(2, sale.getStore().getId());
 				ps.setString(3, sale.getEmployee().getId());
 				ps.setString(4, sale.getCustomerEmail());
-				ps.setDate(5, (Date) sale.getDate());
+				ps.setString(5, sale.getDate().toString());
 
 				rowsAffected = ps.executeUpdate();
 
