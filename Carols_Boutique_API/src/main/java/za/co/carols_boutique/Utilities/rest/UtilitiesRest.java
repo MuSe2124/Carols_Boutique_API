@@ -2,15 +2,19 @@ package za.co.carols_boutique.Utilities.rest;
 
 import za.co.carols_boutique.Utilities.KeepAsideImp;
 import jakarta.ws.rs.Consumes;
+import jakarta.ws.rs.GET;
 import jakarta.ws.rs.POST;
 import jakarta.ws.rs.Path;
+import jakarta.ws.rs.PathParam;
 import jakarta.ws.rs.Produces;
 import jakarta.ws.rs.core.MediaType;
 import jakarta.ws.rs.core.Response;
+import java.util.ArrayList;
 import za.co.carols_boutique.Utilities.IBTImp;
 import za.co.carols_boutique.Utilities.IDGenerator;
 import za.co.carols_boutique.models.IBT;
 import za.co.carols_boutique.models.KeepAside;
+import za.co.carols_boutique.models.Store_Product;
 
 @Path("/utilities")
 
@@ -38,14 +42,31 @@ public class UtilitiesRest {
 		return Response.status(Response.Status.OK).entity("IBT added succesfully. IBT ID is: " + ibt.getId()).build();
 	}
 
-	@POST
-	@Path("/acceptIBT")
+	@GET
+	@Path("/getIBTs/{storeID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response approveIBT(String ibtID) {
+	public ArrayList<IBT> getIBTs(@PathParam("storeID") String storeID) {
 		IBTImp ibtImp = new IBTImp();
-		IBT ibt = ibtImp.getIBT(ibtID);
-		
-		return Response.status(Response.Status.OK).entity("IBT accepted").build();
+		return ibtImp.getIBT(storeID);
+	}
+
+	@GET
+	@Path("/getStoreProducts/{prodID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Store_Product> getStoreProducts(@PathParam("productID") String prodCode) {
+		IBTImp ibtImp = new IBTImp();
+		return ibtImp.getProdStores(prodCode);
+	}
+
+	@GET
+	@Path("/deleteIBT{ibtID}")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
+	public Response deleteIBT(@PathParam("ibtID") String ibtID) {
+		IBTImp ibtImp = new IBTImp();
+		Boolean b = ibtImp.removeIBT(ibtID);
+		return Response.status(Response.Status.OK).entity("IBT added successfully").build();
 	}
 }

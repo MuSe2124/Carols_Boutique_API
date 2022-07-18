@@ -78,4 +78,10 @@ public class IBT implements Serializable {
 	public void setStoreID(String storeID) {
 		this.storeID = storeID;
 	}
+
+	@Override
+	public String toString() {
+		return "IBT{" + "id=" + id + ", productID=" + productID + ", amount=" + amount + ", customerPhone=" + customerPhone + ", size=" + size + ", storeID=" + storeID + '}';
+	}
+	
 }

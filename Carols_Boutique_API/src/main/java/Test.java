@@ -9,8 +9,10 @@ import za.co.carols_boutique.ProductBE.ServiceProduct.ProdServiceImp;
 import za.co.carols_boutique.ReportBE.ServiceReport.RepServiceImp;
 import za.co.carols_boutique.StoreBE.ServiceStore.StoreServiceImp;
 import za.co.carols_boutique.Utilities.Email;
+import za.co.carols_boutique.Utilities.IBTImp;
 import za.co.carols_boutique.models.CardPayment;
 import za.co.carols_boutique.models.Customer;
+import za.co.carols_boutique.models.IBT;
 import za.co.carols_boutique.models.LineItem;
 import za.co.carols_boutique.models.Payment;
 import za.co.carols_boutique.models.Product;
@@ -37,9 +39,16 @@ public class Test {
 
 	public static void main(String[] args) throws FileNotFoundException {
 		Test test = new Test();
-		Report report;
-
-		Store store = new Store("TestID", "Test Name", "Locaion", "pass", 2432f);
+		
+		IBTImp ibtImp = new IBTImp();
+		ArrayList<IBT> lis = ibtImp.getIBT("str2");
+		System.out.println(lis.size());
+		System.out.println(lis.get(0).getCustomerPhone());
+		System.out.println(lis.get(0).toString());
+		
+//		Report report;
+//
+//		Store store = new Store("TestID", "Test Name", "Locaion", "pass", 2432f);
 
 //		Work
 //		System.out.println(test.store.registerStore(store));

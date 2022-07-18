@@ -63,12 +63,12 @@ public class IBTImp {
 				ps.setString(1, productID);
 				rs = ps.executeQuery();
 				while (rs.next()) {
-//					storeProds.add(
-//							new Store_Product(rs.getString("storeID"), 
-//									rs.getString("productID"),
-//									rs.getInt("amount"), 
-//									rs.getString("size"))
-//					);
+					storeProds.add(
+							new Store_Product(rs.getString("storeID"), 
+									rs.getString("productID"),
+									rs.getInt("amount"), 
+									rs.getString("size"))
+					);
 				}
 			} catch (SQLException ex) {
 				Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
@@ -95,10 +95,6 @@ public class IBTImp {
 		}
 		message(ibt);
 		return rowsAffected == 1;
-	}
-	
-	public boolean acceptIBT(String ibtID) {
-		return true;
 	}
 
 
@@ -152,21 +148,22 @@ public class IBTImp {
 		Response response = webTarget.request(MediaType.APPLICATION_XML).post(Entity.xml(sms));
 	}
 
-	public IBT getIBT(String ibtID) {
+	public ArrayList<IBT> getIBT(String storeID) {
+		ArrayList<IBT> ibts = new ArrayList<>();
 		IBT ibt = null;
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("select product, amount, customerPhone, size, store from ibt where id = ?");
-				ps.setString(1, ibtID);
+				ps = con.prepareStatement("select id, product, amount, customerPhone, size, store from ibt where store = ?");
+				ps.setString(1, storeID);
 				rs = ps.executeQuery();
 				if (rs.next()) {
-
-					ibt = new IBT(ibtID, rs.getString("product"), rs.getInt("amount"), rs.getString("customerPhone"), rs.getString("size"), rs.getString("store"));
+					ibt = new IBT(rs.getString("id"), rs.getString("product"), rs.getInt("amount"), rs.getString("customerPhone"), rs.getString("size"), storeID);
+					ibts.add(ibt);
 				}
 			} catch (SQLException ex) {
 				Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
-		return ibt;
+		return ibts;
 	}
 }
