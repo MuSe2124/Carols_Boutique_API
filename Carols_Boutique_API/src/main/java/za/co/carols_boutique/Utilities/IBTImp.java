@@ -15,6 +15,9 @@ import java.util.ArrayList;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 import za.co.carols_boutique.models.IBT;
+import za.co.carols_boutique.models.ProdStore;
+import za.co.carols_boutique.models.Product;
+import za.co.carols_boutique.models.Store;
 import za.co.carols_boutique.models.Store_Product;
 
 public class IBTImp {
@@ -76,7 +79,7 @@ public class IBTImp {
 		}
 		return storeProds;
 	}
-	
+
 	public boolean createIBT(IBT ibt) {
 		ibt.setId(IDGenerator.generateID("IBT"));
 		if (con != null) {
@@ -149,6 +152,7 @@ public class IBTImp {
 		Response response = webTarget.request(MediaType.APPLICATION_XML).post(Entity.xml(sms));
 	}
 
+
 	public ArrayList<IBT> getIBT(String storeID) {
 		ArrayList<IBT> ibts = new ArrayList<>();
 		IBT ibt = null;
@@ -160,6 +164,7 @@ public class IBTImp {
 				if (rs.next()) {
 					ibt = new IBT(rs.getString("id"), rs.getString("product"), rs.getInt("amount"), rs.getString("customerPhone"), rs.getString("size"), storeID);
 					ibts.add(ibt);
+					ibt = new IBT(ibtID, rs.getString("product"), rs.getInt("amount"), rs.getString("customerPhone"), rs.getString("size"), rs.getString("store"));
 				}
 			} catch (SQLException ex) {
 				Logger.getLogger(IBTImp.class.getName()).log(Level.SEVERE, null, ex);

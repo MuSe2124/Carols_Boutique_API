@@ -52,6 +52,15 @@ public class UtilitiesRest {
 	@Path("/getIBTs/{storeID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
+	public ArrayList<Store_Product> getStoreProds(String storeID) {
+		return new IBTImp().getProdStores(storeID);
+
+	}
+
+	@POST
+	@Path("/acceptIBT")
+	@Produces(MediaType.APPLICATION_JSON)
+	@Consumes(MediaType.APPLICATION_JSON)
 	public ArrayList<IBT> getIBTs(@PathParam("storeID") String storeID) {
 		IBTImp ibtImp = new IBTImp();
 		return ibtImp.getIBT(storeID);
