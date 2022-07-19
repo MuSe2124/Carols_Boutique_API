@@ -60,8 +60,6 @@ public class Sale implements Serializable {
 		lineItems = new ArrayList<>();
 		customerEmail = "muaadhseedat3@gmail.com";
 		DateTimeFormatter ds = DateTimeFormatter.ofPattern("yyyy:mm:dd");
-
-		date = LocalDate.parse(ds.format(now()));
 		promo = "PROMOPROMO";
 	}
 

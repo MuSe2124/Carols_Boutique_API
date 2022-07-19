@@ -26,9 +26,9 @@ public class Test {
 		System.out.println(s.getCustomerReviews("june",2));
 		System.out.println("\n\n\n\n");
 		
-//		System.out.println("view montly sales");
-//		System.out.println(s.viewMonthlySales("str2","june"));
-//		System.out.println("\n\n\n\n");
+		System.out.println("view montly sales");
+		System.out.println(s.viewMonthlySales("str2","june"));
+		System.out.println("\n\n\n\n");
 		
 		System.out.println("view top selling employees");
 		System.out.println(s.viewTopSellingEmployees("str2","june"));
