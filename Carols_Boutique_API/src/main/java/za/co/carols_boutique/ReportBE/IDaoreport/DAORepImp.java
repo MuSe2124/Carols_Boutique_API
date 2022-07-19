@@ -113,7 +113,7 @@ public class DAORepImp implements DAORep {
 					reviews.add(new Review(rs.getString("id"),
 							rs.getString("comment"),
 							rs.getInt("rating"),
-							rs.getDate("date")));
+							rs.getDate("date").toString()));
 				}
 			} catch (SQLException ex) {
 				Logger.getLogger(DAORepImp.class.getName()).log(Level.SEVERE, null, ex);

@@ -16,6 +16,11 @@ public class ProdStore implements Serializable {
 		this.amount = amount;
 	}
 
+	public ProdStore() {
+	}
+	
+	
+
 	public String getStoreID() {
 		return storeID;
 	}

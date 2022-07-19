@@ -19,6 +19,11 @@ public class StoreSale implements Serializable {
 		this.target = target;
 	}
 
+	public StoreSale() {
+	}
+	
+	
+
 	public Float getTarget() {
 		return target;
 	}

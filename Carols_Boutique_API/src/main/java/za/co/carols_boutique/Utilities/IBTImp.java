@@ -76,18 +76,18 @@ public class IBTImp {
 		}
 		return storeProds;
 	}
-
-
+	
 	public boolean createIBT(IBT ibt) {
 		ibt.setId(IDGenerator.generateID("IBT"));
 		if (con != null) {
 			try {
-				ps = con.prepareStatement("insert into ibt(id, product, amount, customerPhone, size) values(?, ?, ?, ?, ?)");
+				ps = con.prepareStatement("insert into ibt(id, product, amount, customerPhone, size, store) values(?, ?, ?, ?, ?, ?)");
 				ps.setString(1, ibt.getId());
 				ps.setString(2, ibt.getProductID());
 				ps.setInt(3, ibt.getAmount());
 				ps.setString(4, ibt.getCustomerPhone());
 				ps.setString(5, ibt.getSize());
+				ps.setString(6, ibt.getStoreID());
 				rowsAffected = ps.executeUpdate();
 			} catch (SQLException e) {
 				e.printStackTrace();
@@ -113,6 +113,7 @@ public class IBTImp {
 		}
 		return rowsAffected == 2;
 	}
+	
 
 	private String getStoreName(String storeID) {
 		String storeName = "";

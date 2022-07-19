@@ -22,6 +22,11 @@ public class Store_Product {
 		this.size = size;
 	}
 
+	public Store_Product() {
+	}
+
+	
+	
 	public String getStoreID() {
 		return storeID;
 	}
@@ -54,4 +59,10 @@ public class Store_Product {
 		this.size = size;
 	}
 
+	@Override
+	public String toString() {
+		return "Store_Product{" + "storeID=" + storeID + ", ProductID=" + ProductID + ", amount=" + amount + ", size=" + size + '}';
+	}
+	
+	
 }

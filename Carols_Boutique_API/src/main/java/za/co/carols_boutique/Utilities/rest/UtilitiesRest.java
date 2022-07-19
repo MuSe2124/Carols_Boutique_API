@@ -31,11 +31,17 @@ public class UtilitiesRest {
 		return Response.status(Response.Status.OK).entity("Keep Aside added succesfully. Keep Aside ID is: " + keepAside.getId()).build();
 	}
 
-	@POST
-	@Path("/createIBT")
+	@GET
+	@Path("/createIBT/{prodID}/{storeID}/{amount}/{phone}/{size}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public Response createIBT(IBT ibt) {
+	public Response createIBT(@PathParam("prodID") String prodID, @PathParam("storeID") String storeID, @PathParam("amount") Integer amount, @PathParam("phone") String phone, @PathParam("size") String size) {
+		IBT ibt = new IBT();
+		ibt.setProductID(prodID);
+		ibt.setAmount(amount);
+		ibt.setCustomerEmail(phone);
+		ibt.setStoreID(storeID);
+		ibt.setSize(size);
 		IBTImp ibtImp = new IBTImp();
 		ibtImp.createIBT(ibt);
 
@@ -55,13 +61,13 @@ public class UtilitiesRest {
 	@Path("/getStoreProducts/{prodID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
-	public ArrayList<Store_Product> getStoreProducts(@PathParam("productID") String prodCode) {
+	public ArrayList<Store_Product> getStoreProducts(@PathParam("prodID") String prodCode) {
 		IBTImp ibtImp = new IBTImp();
 		return ibtImp.getProdStores(prodCode);
 	}
 
 	@GET
-	@Path("/deleteIBT{ibtID}")
+	@Path("/deleteIBT/{ibtID}")
 	@Produces(MediaType.APPLICATION_JSON)
 	@Consumes(MediaType.APPLICATION_JSON)
 	public Response deleteIBT(@PathParam("ibtID") String ibtID) {

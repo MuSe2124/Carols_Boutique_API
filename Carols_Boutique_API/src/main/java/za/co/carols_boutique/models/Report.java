@@ -27,6 +27,7 @@ public class Report implements Serializable {
 		saleReports = new ArrayList<>();
 	}
 
+	
 
 	public void setSales(List<Sale> sales) {
 		this.sales = sales;
