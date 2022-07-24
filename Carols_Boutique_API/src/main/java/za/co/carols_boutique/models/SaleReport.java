@@ -32,4 +32,9 @@ public class SaleReport implements Serializable {
 		this.saleTotal = saleTotal;
 	}
 
+	@Override
+	public String toString() {
+		return "SaleReport{" + "saleID=" + saleID + ", saleTotal=" + saleTotal + '}';
+	}
+
 }

@@ -9,6 +9,7 @@ import java.sql.SQLException;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Date;
 import java.util.List;
 import za.co.carols_boutique.models.Customer;
@@ -311,31 +312,55 @@ public class DAORepImp implements DAORep {
 	public Report viewTopSellingProducts(String month) {
 		Report report = new Report();
 		List<ProdStore> prodStores = new ArrayList<>();
+		List<ProdStore> prodStores1 = new ArrayList<>();
 		if (con != null) {
 			try {
 				ps = con.prepareStatement("select id, name from product");
 				rs = ps.executeQuery();
 				while (rs.next()) {
 					String prodID = rs.getString("id");
+					String prodName = rs.getString("name");
+					Integer total = 0;
 					ps = con.prepareStatement("select id, name from store");
 					ResultSet rs2 = ps.executeQuery();
 
-					while (rs.next()) {
-						String storeID = rs.getString("id");
+					while (rs2.next()) {
+						String storeID = rs2.getString("id");
 						ps = con.prepareStatement("select sum(total) from lineitem where product = ?");
 						ps.setString(1, prodID);
 						ResultSet rs3 = ps.executeQuery();
 						rs3.next();
-						Integer total = rs3.getInt("total");
-
+						total = rs3.getInt("sum(total)");
+						prodStores.add(new ProdStore(storeID,
+								prodID,
+								prodName,
+								total));
 					}
+				prodStores1.add(getBestProdStore(prodStores));
+				prodStores.clear();
 				}
+				
 			} catch (SQLException ex) {
 				Logger.getLogger(DAORepImp.class.getName()).log(Level.SEVERE, null, ex);
 			}
 		}
-		report.setProdStores(prodStores);
+		report.setProdStores(prodStores1);
 		return report;
+	}
+	
+	public static void main(String[] args) {
+		DAORepImp dao = new DAORepImp();
+		System.out.println(dao.viewTopSellingProducts("july").getProdStores());
+	}
+	
+	private ProdStore getBestProdStore(List<ProdStore> prodStores) {
+		ProdStore prodStore1 = prodStores.get(0);
+		for (ProdStore prodStore : prodStores) {
+			if (prodStore.getAmount() > prodStore1.getAmount()) {
+				prodStore1 = prodStore;
+			}
+		}
+		return prodStore1;
 	}
 
 	@Override
@@ -432,7 +457,7 @@ public class DAORepImp implements DAORep {
 					ResultSet rs2 = ps.executeQuery();
 					total = 0f;
 					while (rs2.next()) {
-						total += rs.getFloat("total");
+						total += rs2.getFloat("total");
 					}
 					SaleReport sr = new SaleReport(rs.getString("sale"), total);
 					saleReports.add(sr);
@@ -445,6 +470,8 @@ public class DAORepImp implements DAORep {
 		}
 		return report;
 	}
+	
+
 
 	@Override
 	public Boolean addReview(Review review) {
